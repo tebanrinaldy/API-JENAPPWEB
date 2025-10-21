@@ -12,8 +12,8 @@ using Webapi.Data;
 namespace Webapi.Migrations
 {
     [DbContext(typeof(Connectioncontextdb))]
-    [Migration("20251021090738_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251021101127_MakeCategoryOptional")]
+    partial class MakeCategoryOptional
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,21 +50,21 @@ namespace Webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("categoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("categoryId");
+                    b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Webapi.Models.Sale", b =>
@@ -123,13 +123,13 @@ namespace Webapi.Migrations
 
             modelBuilder.Entity("Webapi.Models.Product", b =>
                 {
-                    b.HasOne("Webapi.Models.Category", "category")
+                    b.HasOne("Webapi.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("categoryId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("category");
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
