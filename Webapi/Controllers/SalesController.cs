@@ -78,11 +78,18 @@ namespace Webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Sale>> PostSale(Sale sale)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            sale.TotalPrice = sale.Quantity * sale.UnitPrice;
+            sale.Date = DateTime.Now;
+
             _context.Sales.Add(sale);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSale", new { id = sale.Id }, sale);
+            return CreatedAtAction(nameof(GetSale), new { id = sale.Id }, sale);
         }
+
 
         // DELETE: api/Sales/5
         [HttpDelete("{id}")]
