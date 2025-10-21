@@ -10,6 +10,7 @@ namespace Webapi.Data
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Webapi.Models.Product> Product { get; set; } = default!;
     }
 
 }
