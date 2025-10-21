@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Webapi.Data;
 using Webapi.Models;
+using Webapi.Repositories;
 
 namespace Webapi.Controllers
 {
@@ -14,32 +15,30 @@ namespace Webapi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly Connectioncontextdb _context;
+        private readonly IRepository<User> _repository;
 
-        public UsersController(Connectioncontextdb context)
+        public UsersController(IRepository<User> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _repository.GetAllAsync();
+            return Ok(users);
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-
+            var user = await _repository.GetByIdAsync(id);
             if (user == null)
-            {
                 return NotFound();
-            }
+            return Ok(user);
 
-            return user;
         }
 
         // PUT: api/Users/5
@@ -52,23 +51,7 @@ namespace Webapi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _repository.UpdateAsync(user);
 
             return NoContent();
         }
@@ -78,31 +61,21 @@ namespace Webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _repository.AddAsync(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _repository.GetByIdAsync(id);
             if (user == null)
-            {
-                return NotFound();
-            }
+                 return NotFound();
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
+            await _repository.DeleteAsync(id);
             return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
         }
     }
 }
