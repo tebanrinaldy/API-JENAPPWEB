@@ -12,10 +12,10 @@ builder.Services.AddDbContext<Connectioncontextdb>(options =>
 // 🌐 CORS para permitir peticiones desde tu frontend React
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
+    options.AddPolicy("PermitirTodo", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173") // Cambia esto si tu frontend está en Render
+            .AllowAnyOrigin() 
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
@@ -25,17 +25,24 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.WebHost.UseUrls("http://localhost:5132", "http://192.168.1.39:5132");
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 
-// 🚀 Activar Swagger SIEMPRE (no solo en desarrollo)
-app.UseSwagger();
-app.UseSwaggerUI();
 
-// 🔐 Seguridad y CORS
-// app.UseHttpsRedirection(); // Puedes activarlo si usas HTTPS
-app.UseCors("AllowReactApp");
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+//app.UseHttpsRedirection();
+
+app.UseCors("PermitirTodo");
+
 app.UseAuthorization();
 
 // 🧭 Activar rutas de controladores
