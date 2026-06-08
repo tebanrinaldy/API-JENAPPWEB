@@ -30,7 +30,6 @@ namespace Webapi.Controllers
         }
 
         // GET: api/Users
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -39,7 +38,6 @@ namespace Webapi.Controllers
         }
 
         // GET: api/Users/5
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -59,12 +57,14 @@ namespace Webapi.Controllers
             {
                 return BadRequest();
             }
-            if (!string.IsNullOrEmpty(user.Password))
+            try
             {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                await _userservice.UpdateUserAsync(user);
             }
-
-            await _userservice.UpdateUserAsync(user);
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
 
             return NoContent();
         }
@@ -73,10 +73,18 @@ namespace Webapi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(RegisterUserDto request)
         {
+            var user = new User
+            {
+                Username = request.Username,
+                Password = request.Password
+            };
 
-            await _userservice.RegisterUser(user);
+            var result = await _userservice.RegisterUser(user, request.TenantName, request.TenantSlug);
+
+            if (result == "El usuario ya existe")
+                return Conflict(new { message = result });
 
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
@@ -102,12 +110,16 @@ namespace Webapi.Controllers
             if (user == null)
                 return Unauthorized("Usuario o contraseña incorrectos");
 
-            var token = _jwtTokensGenerator.GenerateToken(user.Username);
+            var token = _jwtTokensGenerator.GenerateToken(new JwtTokensGenerator.UserTokenData(
+                user.Id,
+                user.Username,
+                user.TenantId,
+                user.Tenant?.Slug ?? string.Empty));
 
             return Ok(new
             {
                 message = "Inicio de sesión exitoso",
-                user = new { user.Id, user.Username },
+                user = new { user.Id, user.Username, user.TenantId, tenantSlug = user.Tenant?.Slug, tenantName = user.Tenant?.Name },
                 token   
             });
         }
@@ -115,8 +127,16 @@ namespace Webapi.Controllers
 
         public class LoginDto
         {
-            public string Username { get; set; }
-            public string Password { get; set; } 
+            public string Username { get; set; } = string.Empty;
+            public string Password { get; set; } = string.Empty;
+        }
+
+        public class RegisterUserDto
+        {
+            public string Username { get; set; } = string.Empty;
+            public string Password { get; set; } = string.Empty;
+            public string? TenantName { get; set; }
+            public string? TenantSlug { get; set; }
         }
 
     }

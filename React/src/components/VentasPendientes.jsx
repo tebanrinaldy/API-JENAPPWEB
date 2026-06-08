@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   getPendingSales,
   confirmPendingSale,
@@ -13,7 +13,7 @@ function VentasPendientes() {
   const [connection, setConnection] = useState(null);
   const [notification, setNotification] = useState(null);
 
-  const notificationsound = new Audio("/sounds/sound.mp3");
+  const notificationsound = useMemo(() => new Audio("/sounds/sound.mp3"), []);
 
   const cargarPendientes = async () => {
     try {
@@ -37,12 +37,14 @@ function VentasPendientes() {
     };
 
     window.addEventListener("click", desbloquearAudio);
-  }, []);
+  }, [notificationsound]);
 
   useEffect(() => {
     cargarPendientes();
     const nuevaConexion = new HubConnectionBuilder()
-      .withUrl(`${BASE_API_URL}/hub/notifications`)
+      .withUrl(`${BASE_API_URL}/hub/notifications`, {
+        accessTokenFactory: () => sessionStorage.getItem("token") || "",
+      })
       .withAutomaticReconnect()
       .build();
 
@@ -66,7 +68,7 @@ function VentasPendientes() {
         });
       })
       .catch((err) => console.error("Error al conectar a SignalR:", err));
-  }, [connection]);
+  }, [connection, notificationsound]);
 
   const confirmar = async (id) => {
     if (!confirm("¿Confirmar esta venta?")) return;

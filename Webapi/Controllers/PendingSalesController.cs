@@ -16,15 +16,18 @@ namespace Webapi.Controllers
         private readonly Connectioncontextdb _context;
         private readonly Saleservice _saleService;
         private readonly IHubContext<NotificationsHub> _hub;
+        private readonly ITenantProvider _tenantProvider;
 
         public PendingSalesController(
             Connectioncontextdb context,
             Saleservice saleService,
-            IHubContext<NotificationsHub> hub)
+            IHubContext<NotificationsHub> hub,
+            ITenantProvider tenantProvider)
         {
             _context = context;
             _saleService = saleService;
             _hub = hub;
+            _tenantProvider = tenantProvider;
         }
 
         // POST: api/PendingSales
@@ -33,14 +36,22 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> CreatePendingSale([FromBody] PendingSale pendingSale)
         {
+            if (_tenantProvider.TenantId is not int tenantId)
+                return BadRequest("Debe enviar un tenant válido para crear el pedido.");
+
             if (pendingSale == null || pendingSale.Details == null || !pendingSale.Details.Any())
                 return BadRequest("La venta debe tener al menos un detalle.");
 
          
             foreach (var d in pendingSale.Details)
             {
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == d.ProductId);
+                if (product == null)
+                    return BadRequest($"Producto con ID {d.ProductId} no existe.");
+
                 d.PendingSale = null;
                 d.Product = null;
+                d.UnitPrice = product.Price;
                 d.TotalPrice = d.Quantity * d.UnitPrice;
             }
 
@@ -57,7 +68,7 @@ namespace Webapi.Controllers
             await _context.SaveChangesAsync();
 
            
-            await _hub.Clients.All.SendAsync("PendingSaleCreated", new
+            await _hub.Clients.Group($"tenant-{tenantId}").SendAsync("PendingSaleCreated", new
             {
                 pendingSale.Id,
                 pendingSale.Client,
@@ -218,7 +229,7 @@ namespace Webapi.Controllers
             pending.Status = "Confirmada";
             await _context.SaveChangesAsync();
 
-            await _hub.Clients.All.SendAsync("PendingSaleUpdated", new
+            await _hub.Clients.Group($"tenant-{pending.TenantId}").SendAsync("PendingSaleUpdated", new
             {
                 pending.Id,
                 pending.Status,
@@ -233,7 +244,7 @@ namespace Webapi.Controllers
         [Authorize]
         public async Task<IActionResult> RejectPendingSale(int id)
         {
-            var pending = await _context.PendingSales.FindAsync(id);
+            var pending = await _context.PendingSales.FirstOrDefaultAsync(p => p.Id == id);
 
             if (pending == null)
                 return NotFound();
@@ -244,7 +255,7 @@ namespace Webapi.Controllers
             pending.Status = "Rechazada";
             await _context.SaveChangesAsync();
 
-            await _hub.Clients.All.SendAsync("PendingSaleUpdated", new
+            await _hub.Clients.Group($"tenant-{pending.TenantId}").SendAsync("PendingSaleUpdated", new
             {
                 pending.Id,
                 pending.Status,

@@ -3,7 +3,7 @@ import { BASE_API_URL } from "./baseurl";
 
 
 export async function apiFetch(endpoint, options = {}) {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const headers = {
     "Content-Type": "application/json",

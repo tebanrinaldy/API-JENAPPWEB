@@ -1,13 +1,15 @@
 import { useMemo, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CategoriaSelector from "../components/CategoriaSelector";
 import VentaForm from "../components/VentaForm";
 import "../css/PedidoPublico.css";
-import { BASE_API_URL } from "../api/baseurl";
+import { BASE_API_URL, getStoredTenantSlug, tenantHeaders } from "../api/baseurl";
 
 const WHATSAPP_PHONE = "573043769901";
 
 function PedidoPublico() {
+  const { tenantSlug } = useParams();
+  const effectiveTenantSlug = tenantSlug || getStoredTenantSlug();
   const [carrito, setCarrito] = useState([]);
   const [clienteData, setClienteData] = useState(null);
   const [ventaConfirmada, setVentaConfirmada] = useState(false);
@@ -68,7 +70,7 @@ function PedidoPublico() {
     try {
       const res = await fetch(`${BASE_API_URL}/api/PendingSales`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...tenantHeaders(effectiveTenantSlug) },
         body: JSON.stringify(body),
       });
 
@@ -129,7 +131,8 @@ Teléfono: ${clienteData.phone || ""}
   };
 
   const disabledConfirm = !clienteData || carrito.length === 0 || loading;
-  const isLogged = Boolean(localStorage.getItem("user"));
+  const isLogged = Boolean(sessionStorage.getItem("user"));
+  const missingTenant = !effectiveTenantSlug;
 
   return (
     <div className="pedido-wrapper">
@@ -178,9 +181,13 @@ Teléfono: ${clienteData.phone || ""}
                   }
 
                   if (code) {
-                    window.location.href = `/seguimiento/${code}`;
+                    window.location.href = effectiveTenantSlug
+                      ? `/seguimiento/${effectiveTenantSlug}/${code}`
+                      : `/seguimiento/${code}`;
                   } else {
-                    window.location.href = `/seguimiento/telefono/${phone}`;
+                    window.location.href = effectiveTenantSlug
+                      ? `/seguimiento/${effectiveTenantSlug}/telefono/${phone}`
+                      : `/seguimiento/telefono/${phone}`;
                   }
                 }}
               >
@@ -220,7 +227,11 @@ Teléfono: ${clienteData.phone || ""}
             </p>
 
             <Link
-              to={`/seguimiento/${pedidoInfo.trackingCode}`}
+              to={
+                effectiveTenantSlug
+                  ? `/seguimiento/${effectiveTenantSlug}/${pedidoInfo.trackingCode}`
+                  : `/seguimiento/${pedidoInfo.trackingCode}`
+              }
               className="btn btn-primary mt-2"
             >
               🔎 Ver estado de mi pedido
@@ -232,7 +243,19 @@ Teléfono: ${clienteData.phone || ""}
           <section className="col-12 col-lg-8">
             <div className="panel card-shadow">
               <h2 className="panel-title">🗂 Categorías & Productos</h2>
-              <CategoriaSelector carrito={carrito} setCarrito={setCarrito} />
+              {missingTenant ? (
+                <div className="alert alert-warning mb-0">
+                  Para ver productos, abre el pedido publico con el
+                  identificador del negocio. Ejemplo:{" "}
+                  <strong>/publico/mi-tienda</strong>
+                </div>
+              ) : (
+                <CategoriaSelector
+                  carrito={carrito}
+                  setCarrito={setCarrito}
+                  tenantSlug={effectiveTenantSlug}
+                />
+              )}
             </div>
           </section>
 

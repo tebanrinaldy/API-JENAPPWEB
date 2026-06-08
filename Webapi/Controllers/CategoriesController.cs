@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Webapi.Data;
 using Webapi.Models;
+using Webapi.Services;
 
 namespace Webapi.Controllers
 {
@@ -17,10 +18,17 @@ namespace Webapi.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly Connectioncontextdb _context;
+        private readonly ITenantProvider _tenantProvider;
+        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(Connectioncontextdb context)
+        public CategoriesController(
+            Connectioncontextdb context,
+            ITenantProvider tenantProvider,
+            ILogger<CategoriesController> logger)
         {
             _context = context;
+            _tenantProvider = tenantProvider;
+            _logger = logger;
         }
 
         // GET: api/Categories
@@ -28,14 +36,20 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            _logger.LogInformation($"GET /api/categories - TenantId: {_tenantProvider.TenantId}, TenantSlug: {_tenantProvider.TenantSlug}");
+            
+            var categories = await _context.Categories.ToListAsync();
+            
+            _logger.LogInformation($"Returned {categories.Count} categories for tenant {_tenantProvider.TenantId}");
+            
+            return categories;
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null)
             {
@@ -50,7 +64,7 @@ namespace Webapi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
-            var existing = await _context.Categories.FindAsync(id);
+            var existing = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (existing == null)
                 return NotFound();
@@ -77,7 +91,7 @@ namespace Webapi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if (category == null)
             {
                 return NotFound();

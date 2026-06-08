@@ -3,7 +3,6 @@ import { useState } from "react";
 import CategoriaSelector from "./CategoriaSelector";
 import VentaForm from "./VentaForm";
 import { createSale } from "../api/sales";
-import { getcategories } from "../api/categorias";
 
 function VentaModal({ onClose, onConfirm }) {
   const [carrito, setCarrito] = useState([]);
@@ -39,6 +38,7 @@ function VentaModal({ onClose, onConfirm }) {
     onClose();
   } catch (error) {
     console.error(error);
+    alert(error.message || "Error al crear la venta");
   }
 };
 

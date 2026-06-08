@@ -57,7 +57,7 @@ function Login() {
        
         <p className="login-footer">
           ¿Solo quieres hacer un pedido rápido?{" "}
-          <Link to="/pedido-publico">Ir a Pedido Público</Link>
+          <Link to="/publico">Ir a Pedido Público</Link>
         </p>
       </div>
     </div>

@@ -36,7 +36,8 @@ export async function createuser(user) {
     });
 
     if (!response.ok) {
-      throw new Error(`Error al crear usuario: ${response.status}`);
+      const text = await response.text();
+      throw new Error(text || `Error al crear usuario: ${response.status}`);
     }
 
     return await response.json();

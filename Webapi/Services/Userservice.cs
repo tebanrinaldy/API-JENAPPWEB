@@ -1,69 +1,126 @@
-﻿using BCrypt.Net;
+using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
 using Webapi.Data;
 using Webapi.Models;
-using Webapi.Repositories;
 
 namespace Webapi.Services
 {
     public class Userservice
     {
-        private readonly IRepository<User> _repository;
-        public Userservice(IRepository<User> repository)
+        private readonly Connectioncontextdb _context;
+        private readonly ITenantProvider _tenantProvider;
+
+        public Userservice(Connectioncontextdb context, ITenantProvider tenantProvider)
         {
-            _repository = repository;
-        }
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
-        public async Task<User?> GetUserByIdAsync(int id)
-        {
-            return await _repository.GetByIdAsync(id);
+            _context = context;
+            _tenantProvider = tenantProvider;
         }
 
-        public async  Task<string> RegisterUser(User user)
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            var users = await _repository.GetAllAsync();
-            var existingUser = users.FirstOrDefault(u => u.Username == user.Username);
-            if (existingUser != null)
+            return await _context.Users
+                .Include(u => u.Tenant)
+                .Where(u => _tenantProvider.TenantId.HasValue && u.TenantId == _tenantProvider.TenantId.Value)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            return await _context.Users
+                .Include(u => u.Tenant)
+                .FirstOrDefaultAsync(u => u.Id == id
+                    && _tenantProvider.TenantId.HasValue
+                    && u.TenantId == _tenantProvider.TenantId.Value);
+        }
+
+        public async Task<string> RegisterUser(User user, string? tenantName = null, string? tenantSlug = null)
+        {
+            var existingUser = await _context.Users.AnyAsync(u => u.Username == user.Username);
+            if (existingUser)
                 return "El usuario ya existe";
+
+            if (user.TenantId == 0)
+            {
+                var tenant = new Tenant
+                {
+                    Name = string.IsNullOrWhiteSpace(tenantName) ? user.Username : tenantName.Trim(),
+                    Slug = await BuildAvailableSlugAsync(tenantSlug ?? tenantName ?? user.Username)
+                };
+
+                _context.Tenants.Add(tenant);
+                user.Tenant = tenant;
+            }
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-            await _repository.AddAsync(user);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
             return "Usuario registrado con éxito";
-
         }
+
         public async Task UpdateUserAsync(User user)
         {
+            var existing = await GetUserByIdAsync(user.Id);
+            if (existing == null)
+                throw new KeyNotFoundException("Usuario no encontrado.");
+
+            existing.Username = user.Username;
+
             if (!string.IsNullOrEmpty(user.Password))
-            {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            }
-            await _repository.UpdateAsync(user);
+                existing.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _repository.GetByIdAsync(id);
+            var user = await GetUserByIdAsync(id);
             if (user == null) return false;
 
-            await _repository.DeleteAsync(id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<User?> ValidateUser(string Username, string Password)
+
+        public async Task<User?> ValidateUser(string username, string password)
         {
-            var users = await _repository.GetAllAsync();
-            var user = users.FirstOrDefault(u => u.Username == Username);
+            var user = await _context.Users
+                .Include(u => u.Tenant)
+                .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
                 return null;
 
-            bool valid = BCrypt.Net.BCrypt.Verify(Password, user.Password);
+            var valid = BCrypt.Net.BCrypt.Verify(password, user.Password);
             return valid ? user : null;
         }
 
+        private async Task<string> BuildAvailableSlugAsync(string value)
+        {
+            var baseSlug = Slugify(value);
+            var slug = baseSlug;
+            var index = 2;
+
+            while (await _context.Tenants.IgnoreQueryFilters().AnyAsync(t => t.Slug == slug))
+            {
+                slug = $"{baseSlug}-{index}";
+                index++;
+            }
+
+            return slug;
+        }
+
+        private static string Slugify(string value)
+        {
+            var chars = value.Trim().ToLowerInvariant()
+                .Select(c => char.IsLetterOrDigit(c) ? c : '-')
+                .ToArray();
+
+            var slug = string.Join("-", new string(chars)
+                .Split('-', StringSplitOptions.RemoveEmptyEntries));
+
+            return string.IsNullOrWhiteSpace(slug) ? $"tenant-{Guid.NewGuid():N}"[..15] : slug;
+        }
     }
 }

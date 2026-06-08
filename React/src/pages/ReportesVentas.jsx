@@ -33,19 +33,19 @@ function ReportesVentas() {
 
   const buscar = async () => {
     const fechas = obtenerFechas();
-    if (!fechas) return alert("Seleccione fechas válidas");
+    if (!fechas) return alert("Seleccione fechas validas");
 
     try {
       const data = await getSalesReport(fechas.from, fechas.to);
       setReporte(data);
-    } catch (err) {
+    } catch {
       alert("Error al cargar el reporte");
     }
   };
 
   const exportarPdf = () => {
     const fechas = obtenerFechas();
-    if (!fechas) return alert("Seleccione fechas válidas");
+    if (!fechas) return alert("Seleccione fechas validas");
 
     exportSalesReportPdf(fechas.from, fechas.to);
   };
@@ -59,7 +59,7 @@ function ReportesVentas() {
             modo === "dia" ? "btn btn-primary" : "btn btn-outline-primary"
           }
         >
-          Por día
+          Por dia
         </button>
 
         <button

@@ -1,11 +1,13 @@
-import { BASE_API_URL } from "./baseurl";
+import { BASE_API_URL, tenantHeaders } from "./baseurl";
 
 const API_URL = `${BASE_API_URL}/api/products`;
 
-export const getproductos = async () => {
+export const getproductos = async (tenantSlug) => {
+  const token = sessionStorage.getItem("token");
   const res = await fetch(API_URL, {
     headers: {
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      ...tenantHeaders(tenantSlug),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
 

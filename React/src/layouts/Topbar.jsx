@@ -1,17 +1,21 @@
 import "./Topbar.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 
 function Topbar() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [tenantSlug, setTenantSlug] = useState("");
+  const [tenantName, setTenantName] = useState("");
 
   useEffect(() => {
     const userData = sessionStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);
       setUsername(user.username);
+      setTenantSlug(user.tenantSlug || "");
+      setTenantName(user.tenantName || "");
     }
   }, []);
 
@@ -24,6 +28,14 @@ function Topbar() {
   return (
     <div className="topbar">
       <div className="topbar-right">
+        {tenantSlug && (
+          <div className="topbar-tenant">
+            <span className="topbar-tenant-name">{tenantName || "Negocio"}</span>
+            <Link to={`/publico/${tenantSlug}`} className="topbar-public-link">
+              /publico/{tenantSlug}
+            </Link>
+          </div>
+        )}
         <span className="topbar-user">👤 {username}</span>
         <Button variant="outline-info" onClick={handlelogout}>
           Salir

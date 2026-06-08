@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
 using System.Text;
+using System.Text.Json.Serialization;
 using Webapi;
 using Webapi.Data;
 using Webapi.Hubs;
+using Webapi.Middleware;
 using Webapi.Repositories;
 using Webapi.Services;
 
@@ -23,13 +25,18 @@ builder.Services.AddCors(options =>
     options.AddPolicy("PermitirTodo", policy =>
     {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins("http://localhost:5173", "http://127.0.0.1:5173")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,6 +45,7 @@ builder.Services.AddSwaggerGen();
 // builder.WebHost.UseUrls("http://localhost:5132");
 
 builder.Services.AddScoped<JwtTokensGenerator>();
+builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<Userservice>();
@@ -48,7 +56,8 @@ builder.Services.AddScoped<Reportsservice>();
 
 builder.Services.AddHttpClient("ollama", c =>
 {
-    c.BaseAddress = new Uri("http://localhost:11434");
+    var ollamaBaseUrl = builder.Configuration["Ollama:BaseUrl"] ?? "http://localhost:11434";
+    c.BaseAddress = new Uri(ollamaBaseUrl);
 });
 
 builder.Services.AddScoped<ChatbotService>();
@@ -67,6 +76,22 @@ builder.Services.AddAuthentication("Bearer")
                     builder.Configuration["JWTSettings:Key"]!
                 ))
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    path.StartsWithSegments("/hub/notifications"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddSignalR();
@@ -81,6 +106,7 @@ app.UseSwaggerUI();
 app.UseCors("PermitirTodo");
 
 app.UseAuthentication();
+app.UseMiddleware<TenantMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

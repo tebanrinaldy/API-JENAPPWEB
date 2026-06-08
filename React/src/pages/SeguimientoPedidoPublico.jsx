@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { BASE_API_URL } from "../api/baseurl";
+import { BASE_API_URL, getStoredTenantSlug, tenantHeaders } from "../api/baseurl";
 import "../css/PedidoPublico.css";
 
 function SeguimientoPedidoPublico() {
   const { code, phone } = useParams();
+  const { tenantSlug } = useParams();
+  const effectiveTenantSlug = tenantSlug || getStoredTenantSlug();
   const [data, setData] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +25,9 @@ function SeguimientoPedidoPublico() {
               code
             )}`;
 
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: tenantHeaders(effectiveTenantSlug),
+        });
 
         if (!res.ok) {
           if (res.status === 404) {
@@ -48,7 +52,7 @@ function SeguimientoPedidoPublico() {
     if (code || phone) {
       fetchPedido();
     }
-  }, [code, phone]);
+  }, [code, phone, effectiveTenantSlug]);
 
   const renderEstado = (status) => {
     const pasos = ["Pendiente", "Confirmada", "Rechazada"];
@@ -83,7 +87,10 @@ function SeguimientoPedidoPublico() {
           </div>
 
           <div className="header-actions">
-            <Link to="/pedido-publico" className="btn btn-outline-primary">
+            <Link
+              to={effectiveTenantSlug ? `/publico/${effectiveTenantSlug}` : "/publico"}
+              className="btn btn-outline-primary"
+            >
               🛍 Hacer otro pedido
             </Link>
           </div>

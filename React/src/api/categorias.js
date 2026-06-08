@@ -1,12 +1,14 @@
-import { BASE_API_URL } from "./baseurl";
+import { BASE_API_URL, tenantHeaders } from "./baseurl";
 
 const API_URL = `${BASE_API_URL}/api/categories`;
 
-export const getcategories = async () => {
+export const getcategories = async (tenantSlug) => {
+  const token = sessionStorage.getItem("token");
   const res = await fetch(API_URL, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      ...tenantHeaders(tenantSlug),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
   return res.json();
@@ -24,7 +26,7 @@ export const createcategories = async (category) => {
 };
 
 export const updatecategories = async (id, category) => {
-  const res = await fetch(`${API_URL}/${id}`, {
+  await fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -35,7 +37,7 @@ export const updatecategories = async (id, category) => {
 };
 
 export const deletecategories = async (id) => {
-  const res = await fetch(`${API_URL}/${id}`, {
+  await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,

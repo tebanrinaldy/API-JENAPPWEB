@@ -9,13 +9,13 @@ function VentaForm({ onConfirm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!client || !paymentMethod) return;
+    if (!client.trim() || !paymentMethod) return;
 
     onConfirm({
-      client,
-      email,
-      phone,
-      address,
+      client: client.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      address: address.trim(),
       paymentMethod,
     });
   };
@@ -51,7 +51,6 @@ function VentaForm({ onConfirm }) {
           className="form-control"
           value={phone}
           onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-          required
         />
       </div>
 
@@ -62,7 +61,6 @@ function VentaForm({ onConfirm }) {
           className="form-control"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          required
         />
       </div>
 

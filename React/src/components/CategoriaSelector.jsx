@@ -4,7 +4,7 @@ import { getcategories } from "../api/categorias";
 import { getproductos } from "../api/productos";
 import "../css/CategoriaSelector.css";
 
-function CategoriaSelector({ carrito, setCarrito }) {
+function CategoriaSelector({ carrito, setCarrito, tenantSlug }) {
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
@@ -12,8 +12,8 @@ function CategoriaSelector({ carrito, setCarrito }) {
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        const cats = await getcategories();
-        const prods = await getproductos();
+        const cats = await getcategories(tenantSlug);
+        const prods = await getproductos(tenantSlug);
         setCategorias(cats || []);
         setProductos(prods || []);
       } catch (error) {
@@ -21,7 +21,7 @@ function CategoriaSelector({ carrito, setCarrito }) {
       }
     };
     cargarDatos();
-  }, []);
+  }, [tenantSlug]);
 
   const getImagenUrl = (producto) => {
     const raw = producto.imageUrl || producto.imagen || producto.imgUrl;

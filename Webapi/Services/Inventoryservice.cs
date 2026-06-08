@@ -21,7 +21,7 @@ namespace Webapi.Services
 
         public async Task<InventoryMovement?> RegisterMovementAsync(InventoryMovement movement)
         {
-            var product = await _context.Products.FindAsync(movement.ProductId);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == movement.ProductId);
 
             if (product == null)
                 throw new ArgumentException("El producto no existe.");

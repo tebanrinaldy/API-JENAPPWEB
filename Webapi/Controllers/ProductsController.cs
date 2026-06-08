@@ -19,10 +19,19 @@ namespace Webapi.Controllers
     {
         private readonly Connectioncontextdb _context;
         private readonly Productservice _productservice;
-        public ProductsController(Connectioncontextdb context, Productservice productservice)
+        private readonly ITenantProvider _tenantProvider;
+        private readonly ILogger<ProductsController> _logger;
+
+        public ProductsController(
+            Connectioncontextdb context, 
+            Productservice productservice,
+            ITenantProvider tenantProvider,
+            ILogger<ProductsController> logger)
         {
             _context = context;
             _productservice = productservice;
+            _tenantProvider = tenantProvider;
+            _logger = logger;
         }
 
         // GET: api/Products
@@ -30,14 +39,22 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Products.ToListAsync();
+            _logger.LogInformation($"GET /api/products - TenantId: {_tenantProvider.TenantId}, TenantSlug: {_tenantProvider.TenantSlug}");
+            
+            var products = await _context.Products.ToListAsync();
+            
+            _logger.LogInformation($"Returned {products.Count} products for tenant {_tenantProvider.TenantId}");
+            
+            return products;
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
@@ -56,6 +73,15 @@ namespace Webapi.Controllers
             {
                 return BadRequest();
             }
+
+            var existing = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (existing == null)
+                return NotFound();
+
+            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == product.CategoryId);
+            if (!categoryExists)
+                return BadRequest(new { message = "La categoría no existe para este tenant." });
+
             try
             {
                 _productservice.Updatestock(product);
@@ -63,7 +89,12 @@ namespace Webapi.Controllers
             { 
                 return BadRequest (new {message = ex.Message});
             }
-            _context.Entry(product).State = EntityState.Modified;
+
+            existing.Name = product.Name;
+            existing.Price = product.Price;
+            existing.Stock = product.Stock;
+            existing.CategoryId = product.CategoryId;
+            existing.ImageUrl = product.ImageUrl;
 
             try
             {
@@ -85,6 +116,10 @@ namespace Webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == product.CategoryId);
+            if (!categoryExists)
+                return BadRequest(new { message = "La categoría no existe para este tenant." });
+
             try
             {
                 _productservice.Initialstock(product);
@@ -104,7 +139,7 @@ namespace Webapi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
                 return NotFound();

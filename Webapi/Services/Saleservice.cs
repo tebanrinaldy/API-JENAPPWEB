@@ -35,7 +35,7 @@ namespace Webapi.Services
 
             foreach (var detail in sale.Details)
             {
-                var product = await _context.Products.FindAsync(detail.ProductId);
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == detail.ProductId);
                 if (product == null)
                     throw new KeyNotFoundException($"Producto con ID {detail.ProductId} no existe.");
                 if (product.Stock < detail.Quantity)

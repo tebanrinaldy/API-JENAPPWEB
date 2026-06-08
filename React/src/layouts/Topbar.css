@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .topbar-user {
@@ -9,6 +11,38 @@
   color: #cfd8e3;
 }
 
+.topbar-tenant {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.topbar-tenant-name {
+  color: #cfd8e3;
+  font-size: 0.85rem;
+  font-weight: 600;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-public-link {
+  color: #67e8f9;
+  font-size: 0.78rem;
+  text-decoration: none;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-public-link:hover {
+  color: #a5f3fc;
+  text-decoration: underline;
+}
 
 
 
