@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { FiAlertTriangle, FiBox, FiDollarSign, FiShoppingBag } from "react-icons/fi";
 import { getproductos } from "../api/productos";
 import { getSales } from "../api/sales";
 import SalesChart from "../components/SalesChart";
-import "../css/Dashboard.css";
 import VentasPendientes from "../components/VentasPendientes";
+import "../css/Dashboard.css";
 
 function Dashboard() {
   const [productos, setProductos] = useState([]);
@@ -35,143 +36,131 @@ function Dashboard() {
   };
 
   const ventasHoy = ventas.filter((v) => esHoy(v.date ?? v.Date));
-
   const totalVentasHoy = ventasHoy.reduce(
     (acum, v) => acum + (Number(v.total ?? v.Total ?? 0) || 0),
     0
   );
-
   const cantidadVentasHoy = ventasHoy.length;
-
   const stockMinimoPorDefecto = 5;
   const productosBajoStock = productos.filter((p) => {
     const stockMinimo = p.stockMin ?? stockMinimoPorDefecto;
     return (p.stock ?? 0) <= stockMinimo;
   }).length;
 
-  if (cargando) return <p className="p-4">Cargando dashboard...</p>;
+  if (cargando) {
+    return <p className="p-4">Cargando dashboard...</p>;
+  }
+
+  const stats = [
+    {
+      label: "Total vendido hoy",
+      value: `$${totalVentasHoy.toLocaleString("es-CO")}`,
+      caption: "Suma de las ventas registradas hoy",
+      icon: FiDollarSign,
+      tone: "primary",
+    },
+    {
+      label: "Ventas de hoy",
+      value: cantidadVentasHoy,
+      caption: "Tickets emitidos durante el día",
+      icon: FiShoppingBag,
+      tone: "green",
+    },
+    {
+      label: "Productos",
+      value: productos.length,
+      caption: "Artículos activos en el catálogo",
+      icon: FiBox,
+      tone: "neutral",
+    },
+    {
+      label: "Stock bajo",
+      value: productosBajoStock,
+      caption: "Productos que necesitan revisión",
+      icon: FiAlertTriangle,
+      tone: "warning",
+    },
+  ];
 
   return (
     <div className="dashboard-container">
-      <div className="container-fluid py-4">
-        {/* ENCABEZADO */}
-        <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+      <div className="page-hero dashboard-hero">
+        <div>
+          <h2>Dashboard general</h2>
+          <p>Resumen operativo de ventas, pedidos y estado del inventario.</p>
+        </div>
+        <div className="dashboard-hero-badge">
+          <span>Hoy</span>
+          <strong>{new Date().toLocaleDateString("es-CO")}</strong>
+        </div>
+      </div>
+
+      <div className="stats-grid">
+        {stats.map(({ label, value, caption, icon: Icon, tone }) => (
+          <article key={label} className={`stat-card stat-card-${tone}`}>
+            <div className="stat-icon">
+              <Icon />
+            </div>
+            <p className="stat-label">{label}</p>
+            <h3 className="stat-value">{value}</h3>
+            <span className="stat-caption">{caption}</span>
+          </article>
+        ))}
+      </div>
+
+      <section className="soft-card chart-card">
+        <div className="section-heading">
           <div>
-            <h2 className="fw-bold mb-1">Dashboard general</h2>
-            <p className="text-muted mb-0">
-              Resumen de ventas, comportamiento y stock de productos.
-            </p>
+            <h3>Ventas por día</h3>
+            <p>Historial reciente para detectar movimiento y temporadas fuertes.</p>
+          </div>
+        </div>
+        <SalesChart ventas={ventas} />
+      </section>
+
+      <VentasPendientes />
+
+      <section className="stock-section">
+        <div className="section-heading">
+          <div>
+            <h3>Stock disponible</h3>
+            <p>Revisión rápida del inventario actual por producto.</p>
           </div>
         </div>
 
-        {/* CARDS RESUMEN */}
-        <div className="row g-3 mb-4">
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="stat-card stat-card-primary">
-              <p className="stat-label">Total ventas de hoy</p>
-              <h3 className="stat-value">
-                ${totalVentasHoy.toLocaleString("es-CO")}
-              </h3>
-              <span className="stat-caption">
-                Suma de todas las ventas registradas hoy
-              </span>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="stat-card stat-card-secondary">
-              <p className="stat-label">Cantidad de ventas hoy</p>
-              <h3 className="stat-value">{cantidadVentasHoy}</h3>
-              <span className="stat-caption">Número de tickets emitidos</span>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="stat-card stat-card-neutral">
-              <p className="stat-label">Productos registrados</p>
-              <h3 className="stat-value">{productos.length}</h3>
-              <span className="stat-caption">
-                Total de productos en tu inventario
-              </span>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6 col-lg-3">
-            <div className="stat-card stat-card-alert">
-              <p className="stat-label">Productos por agotarse</p>
-              <h3 className="stat-value">{productosBajoStock}</h3>
-              <span className="stat-caption">Stock bajo o en nivel mínimo</span>
-            </div>
-          </div>
-        </div>
-
-        {/* GRÁFICA EN CARD */}
-        <div className="card shadow-sm soft-card mb-4">
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h5 className="card-title mb-0">Ventas por día</h5>
-              <span className="text-muted small">
-                Historial de ventas recientes
-              </span>
-            </div>
-            <SalesChart ventas={ventas} />
-          </div>
-        </div>
-        <VentasPendientes />
-
-        {/* STOCK DE PRODUCTOS */}
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <h5 className="mb-0">Stock disponible por producto</h5>
-        </div>
-
-        <div className="row g-3">
+        <div className="stock-grid">
           {productos.map((p) => {
             const stockMinimo = p.stockMin ?? stockMinimoPorDefecto;
             const stockActual = p.stock ?? 0;
             const estaBajo = stockActual <= stockMinimo;
 
             return (
-              <div key={p.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div
-                  className={
-                    "soft-card stock-card h-100 " +
-                    (estaBajo ? "stock-card-low" : "")
-                  }
-                >
-                  <div className="d-flex flex-column h-100">
-                    <div className="mb-2">
-                      <h6 className="mb-1 text-truncate" title={p.name}>
-                        {p.name}
-                      </h6>
-                      <p className="mb-1">
-                        Stock disponible:{" "}
-                        <strong>{stockActual} unidades</strong>
-                      </p>
-                      <small className="text-muted">
-                        Mínimo recomendado: {stockMinimo}
-                      </small>
-                    </div>
-
-                    {estaBajo && (
-                      <div className="mt-auto">
-                        <span className="badge bg-danger-subtle text-danger-emphasis rounded-pill px-3 py-1 small">
-                          ⚠ Stock bajo, revisa este producto
-                        </span>
-                      </div>
-                    )}
-                  </div>
+              <article
+                key={p.id}
+                className={`stock-card ${estaBajo ? "stock-card-low" : ""}`}
+              >
+                <div>
+                  <h4 title={p.name}>{p.name}</h4>
+                  <p>
+                    <strong>{stockActual}</strong> unidades disponibles
+                  </p>
+                  <small>Mínimo recomendado: {stockMinimo}</small>
                 </div>
-              </div>
+
+                {estaBajo && (
+                  <span className="stock-alert">Stock bajo</span>
+                )}
+              </article>
             );
           })}
 
           {productos.length === 0 && (
-            <p className="text-muted mt-3">
+            <div className="surface-panel empty-state">
               No hay productos registrados en el inventario.
-            </p>
+            </div>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

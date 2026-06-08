@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createuser } from "../api/users";
+import "../css/Login.css";
 import "../css/Register.css";
 
 function Register() {
@@ -22,21 +23,24 @@ function Register() {
       });
 
       if (result) {
-        alert("Usuario registrado con exito");
+        alert("Usuario registrado con éxito");
         navigate("/login");
       } else {
         alert("Error al registrar usuario");
       }
     } catch (error) {
       console.error("Error en el registro:", error);
-      alert("Ocurrio un error al registrar el usuario");
+      alert("Ocurrió un error al registrar el usuario");
     }
   };
 
   return (
     <div className="register-container">
       <div className="register-card">
+        <span className="auth-kicker">JenApp</span>
         <h2>Registrar negocio</h2>
+        <p className="auth-subtitle">Crea tu espacio y empieza a vender mejor.</p>
+
         <form onSubmit={handleregister}>
           <label>Usuario administrador</label>
           <input
@@ -56,7 +60,7 @@ function Register() {
             required
           />
 
-          <label>Identificador publico</label>
+          <label>Identificador público</label>
           <input
             type="text"
             placeholder="Ej: mi-tienda"
@@ -64,7 +68,7 @@ function Register() {
             onChange={(e) => setTenantSlug(e.target.value)}
           />
 
-          <label>Contrasena</label>
+          <label>Contraseña</label>
           <input
             type="password"
             placeholder="********"
@@ -79,7 +83,7 @@ function Register() {
             onClick={() => navigate("/login")}
             className="back-button"
           >
-            Volver al inicio de sesion
+            Volver al inicio de sesión
           </button>
         </form>
       </div>

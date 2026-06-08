@@ -1,22 +1,25 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 import logo from "../assets/logo jenweb.png";
-
-// 👇 IMPORTAMOS LOS ICONOS DESDE react-icons/fi
 import {
-  FiHome,
-  FiShoppingCart,
-  FiFolder,
-  FiBox,
-  FiLayers,
   FiBarChart2,
+  FiBox,
+  FiFolder,
+  FiHome,
+  FiLayers,
+  FiShoppingCart,
 } from "react-icons/fi";
 
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h2 className="sidebar-title">JenApp</h2>
-      <img src={logo} alt="Logo de JenApp" className="logo" />
+      <div className="sidebar-brand">
+        <img src={logo} alt="Logo de JenApp" className="sidebar-logo" />
+        <div>
+          <h2 className="sidebar-title">JenApp</h2>
+          <span className="sidebar-subtitle">Gestión comercial</span>
+        </div>
+      </div>
 
       <nav className="sidebar-nav">
         <NavLink to="/dashboard" className="sidebar-btn">
@@ -46,7 +49,7 @@ function Sidebar() {
 
         <NavLink to="/reportes-ventas" className="sidebar-btn">
           <FiBarChart2 className="icon" />
-          <span>Reportes de Ventas</span>
+          <span>Reportes</span>
         </NavLink>
       </nav>
     </div>

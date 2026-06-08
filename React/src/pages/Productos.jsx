@@ -6,6 +6,7 @@ import {
   updateproducto,
 } from "../api/productos";
 import { getcategories } from "../api/categorias";
+import { FiEdit2, FiImage, FiPlus, FiTrash2 } from "react-icons/fi";
 import "../css/Productos.css";
 
 function Producto() {
@@ -80,7 +81,7 @@ function Producto() {
   };
 
   const eliminarProducto = async (id) => {
-    if (!window.confirm("Estas seguro de eliminar este producto?")) return;
+    if (!window.confirm("¿Estás seguro de eliminar este producto?")) return;
 
     try {
       await deleteproducto(id);
@@ -108,7 +109,7 @@ function Producto() {
       <header className="productos-header">
         <div>
           <h2>Administrar productos</h2>
-          <p>Gestiona tu catalogo, precios, stock e imagenes.</p>
+          <p>Gestiona tu catálogo, precios, stock e imágenes.</p>
         </div>
       </header>
 
@@ -150,7 +151,7 @@ function Producto() {
           onChange={handleChange}
           required
         >
-          <option value="">Selecciona categoria</option>
+          <option value="">Selecciona categoría</option>
           {categorias.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -168,7 +169,15 @@ function Producto() {
         />
 
         <button type="submit" className="btn btn-success productos-submit">
-          {editando !== null ? "Actualizar" : "Anadir"}
+          {editando !== null ? (
+            <>
+              <FiEdit2 /> Actualizar
+            </>
+          ) : (
+            <>
+              <FiPlus /> Añadir
+            </>
+          )}
         </button>
       </form>
 
@@ -182,7 +191,9 @@ function Producto() {
                 {p.imageUrl ? (
                   <img src={p.imageUrl} alt={p.name} className="producto-img" />
                 ) : (
-                  <div className="producto-img producto-img-empty" />
+                  <div className="producto-img producto-img-empty">
+                    <FiImage />
+                  </div>
                 )}
 
                 <div className="producto-copy">
@@ -198,14 +209,14 @@ function Producto() {
                   className="btn btn-sm btn-primary"
                   onClick={() => editar(p)}
                 >
-                  Editar
+                  <FiEdit2 /> Editar
                 </button>
                 <button
                   type="button"
                   className="btn btn-sm btn-danger"
                   onClick={() => eliminarProducto(p.id)}
                 >
-                  Eliminar
+                  <FiTrash2 /> Eliminar
                 </button>
               </div>
             </li>

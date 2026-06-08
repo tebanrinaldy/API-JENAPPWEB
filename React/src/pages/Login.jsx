@@ -25,7 +25,9 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
+        <span className="auth-kicker">JenApp</span>
         <h2>Iniciar sesión</h2>
+        <p className="auth-subtitle">Accede al panel de gestión de tu negocio.</p>
 
         <form onSubmit={handlelogin}>
           <label>Usuario</label>
@@ -40,7 +42,7 @@ function Login() {
           <label>Contraseña</label>
           <input
             type="password"
-            placeholder="••••••••"
+            placeholder="********"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -49,12 +51,10 @@ function Login() {
           <button type="submit">Entrar</button>
         </form>
 
-      
         <p className="login-footer">
           ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
         </p>
 
-       
         <p className="login-footer">
           ¿Solo quieres hacer un pedido rápido?{" "}
           <Link to="/publico">Ir a Pedido Público</Link>

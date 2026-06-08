@@ -8,8 +8,16 @@
 }
 
 .topbar-user {
-  font-weight: 500;
-  color: #cfd8e3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  padding: 0.42rem 0.72rem;
+  border-radius: 8px;
+  font-weight: 700;
+  color: #edf7fb;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .topbar-tenant {
@@ -21,9 +29,9 @@
 }
 
 .topbar-tenant-name {
-  color: #cfd8e3;
+  color: #f4fbff;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 800;
   max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -31,18 +39,28 @@
 }
 
 .topbar-public-link {
-  color: #67e8f9;
+  color: #8ee8eb;
   font-size: 0.78rem;
   text-decoration: none;
   max-width: 260px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .topbar-public-link:hover {
-  color: #a5f3fc;
+  color: #c9fbff;
   text-decoration: underline;
+}
+
+.topbar-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 38px;
 }
 
 @media (max-width: 900px) {

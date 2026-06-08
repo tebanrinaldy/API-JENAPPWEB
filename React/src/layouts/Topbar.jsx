@@ -2,6 +2,7 @@ import "./Topbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
+import { FiExternalLink, FiLogOut, FiUser } from "react-icons/fi";
 
 function Topbar() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function Topbar() {
     alert("Sesión cerrada correctamente");
     navigate("/login");
   };
+
   return (
     <div className="topbar">
       <div className="topbar-right">
@@ -32,12 +34,17 @@ function Topbar() {
           <div className="topbar-tenant">
             <span className="topbar-tenant-name">{tenantName || "Negocio"}</span>
             <Link to={`/publico/${tenantSlug}`} className="topbar-public-link">
-              /publico/{tenantSlug}
+              <FiExternalLink /> /publico/{tenantSlug}
             </Link>
           </div>
         )}
-        <span className="topbar-user">👤 {username}</span>
-        <Button variant="outline-info" onClick={handlelogout}>
+
+        <span className="topbar-user">
+          <FiUser /> {username}
+        </span>
+
+        <Button variant="outline-info" onClick={handlelogout} className="topbar-logout">
+          <FiLogOut />
           Salir
         </Button>
       </div>

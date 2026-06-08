@@ -1,78 +1,113 @@
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #0F1F2F; /* Fondo oscuro similar al sidebar */
+.login-container,
+.register-container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background:
+    linear-gradient(135deg, rgba(14, 165, 168, 0.24), transparent 36%),
+    linear-gradient(315deg, rgba(249, 115, 91, 0.18), transparent 36%),
+    linear-gradient(180deg, #102033 0%, #172033 100%);
 }
 
-.login-card {
-  background-color: #1A334A; /* Mismo color base que el sidebar */
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  color: white;
+.login-card,
+.register-card {
+  width: min(100%, 430px);
+  padding: clamp(1.45rem, 4vw, 2.2rem);
+  border-radius: 8px;
+  color: #f7fbfc;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
 }
 
-.login-card h2 {
-  margin-bottom: 1.5rem;
-  color: #27E6EC; /* Color acento */
-  font-size: 1.8rem;
+.auth-kicker {
+  display: inline-flex;
+  margin-bottom: 0.65rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  color: #c9fbff;
+  background: rgba(201, 251, 255, 0.1);
+  border: 1px solid rgba(201, 251, 255, 0.2);
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
-.login-card label {
-  display: block;
+.login-card h2,
+.register-card h2 {
+  margin: 0 0 0.3rem;
+  color: #ffffff;
+  font-size: clamp(1.55rem, 4vw, 2rem);
+  font-weight: 900;
+}
+
+.auth-subtitle {
+  margin: 0 0 1.4rem;
+  color: #a9c7d8;
+}
+
+.login-card form,
+.register-card form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.login-card label,
+.register-card label {
+  color: #dbeaf2;
+  font-weight: 750;
   text-align: left;
-  margin: 0.5rem 0 0.25rem;
-  font-weight: 500;
-  color: #C0D3E8;
 }
 
-.login-card input {
+.login-card input,
+.register-card input {
   width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #27E6EC;
+  min-height: 46px;
   border-radius: 8px;
-  font-size: 1rem;
-  background-color: #0F1F2F;
-  color: white;
+  border: 1px solid rgba(201, 251, 255, 0.28);
+  background: rgba(15, 40, 55, 0.72);
+  color: #ffffff;
+  padding: 0.72rem 0.85rem;
 }
 
-.login-card input::placeholder {
-  color: #9BBBD4;
+.login-card input::placeholder,
+.register-card input::placeholder {
+  color: #8ea8b8;
 }
 
-.login-card button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #27E6EC;
-  color: #1A334A;
-  border: none;
+.login-card input:focus,
+.register-card input:focus {
+  outline: none;
+  border-color: #8ee8eb;
+  box-shadow: 0 0 0 0.22rem rgba(142, 232, 235, 0.14);
+}
+
+.login-card button,
+.register-card button {
+  min-height: 46px;
+  border: 0;
   border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  color: #0f2837;
+  background: linear-gradient(135deg, #c9fbff, #7ee7da);
+  font-weight: 900;
+  transition: transform 0.16s ease, filter 0.16s ease;
 }
 
-.login-card button:hover {
-  background-color: #1A334A;
-  color: #27E6EC;
-  border: 1px solid #27E6EC;
+.login-card button:hover,
+.register-card button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
 }
 
 .login-footer {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #C0D3E8;
+  margin: 1rem 0 0;
+  color: #c6d7e2;
+  text-align: center;
 }
 
-.login-footer a {
-  color: #27E6EC;
-  text-decoration: none;
-  font-weight: 500;
+.login-footer a,
+.register-card a {
+  color: #8ee8eb;
+  font-weight: 850;
 }

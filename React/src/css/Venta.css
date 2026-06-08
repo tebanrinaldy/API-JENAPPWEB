@@ -1,14 +1,30 @@
 /* Fondo general */
 .venta-page {
   min-height: calc(100vh - 68px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* Card del filtro */
 .filtro-card {
-  border-radius: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.22);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+  padding: 1rem;
+}
+
+.filtro-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.8rem;
+}
+
+.venta-page .page-hero .btn,
+.filtro-content .btn,
+.venta-ticket-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 }
 
 /* -------- LISTA -------- */
@@ -16,6 +32,22 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.venta-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.4rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: #64748b;
+  box-shadow: var(--shadow-sm);
+}
+
+.venta-empty strong {
+  color: #10253a;
 }
 
 /* Animación de entrada */
@@ -44,7 +76,7 @@
 
 .venta-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 /* Ventas de hoy con color especial */
@@ -57,6 +89,56 @@
   padding: 0.9rem 1.2rem;
   background: #f8fbfc;
   border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.venta-card-heading {
+  min-width: 0;
+}
+
+.venta-card-heading h3 {
+  color: #10253a;
+  font-size: 1.05rem;
+  font-weight: 850;
+  margin: 0.15rem 0;
+}
+
+.venta-card-heading time,
+.venta-id {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.venta-id {
+  display: inline-flex;
+  padding: 0.18rem 0.48rem;
+  border-radius: 999px;
+  background: #e6f7f8;
+  color: #168f98;
+  font-weight: 750;
+}
+
+.venta-total-box {
+  min-width: 132px;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #102033, var(--color-brand));
+  color: #ffffff;
+  text-align: right;
+}
+
+.venta-total-box span {
+  display: block;
+  font-size: 0.72rem;
+  color: #a9c7d8;
+}
+
+.venta-total-box strong {
+  display: block;
+  font-size: 1.12rem;
 }
 
 /* Cliente y fecha */
@@ -98,6 +180,63 @@
   padding: 0.85rem 1.2rem 1.1rem;
 }
 
+.venta-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.venta-meta-item {
+  min-width: 0;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid #e5edf2;
+  border-radius: 8px;
+  background: #fbfdfe;
+}
+
+.venta-meta-item span {
+  display: block;
+  color: #64748b;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.venta-meta-item strong {
+  display: block;
+  color: #10253a;
+  font-size: 0.88rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.venta-table-wrap {
+  border: 1px solid #e5edf2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.venta-table thead th {
+  background: #f1f7f8;
+  color: #334155;
+  border-bottom: 1px solid #dce8ee;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.venta-table tbody td {
+  color: #10253a;
+  vertical-align: middle;
+}
+
+.venta-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.85rem;
+}
+
 /* Fila total */
 .venta-total-row {
   background: #f1f7f8;
@@ -122,8 +261,28 @@
     padding-right: 0.9rem;
   }
 
+  .venta-card-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .venta-total-box {
+    width: 100%;
+    text-align: left;
+  }
+
+  .venta-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
   .venta-ticket-btn {
     width: 100%;
     margin-top: 0.5rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1100px) {
+  .venta-meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

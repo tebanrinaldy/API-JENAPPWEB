@@ -3,6 +3,13 @@
 }
 
 .productos-header {
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(17, 94, 103, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(240, 252, 253, 0.9)),
+    linear-gradient(135deg, rgba(249, 115, 91, 0.12), rgba(18, 167, 102, 0.08));
+  box-shadow: var(--shadow-sm);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -11,13 +18,13 @@
 }
 
 .productos-header h2 {
-  color: #10253a;
-  font-weight: 850;
+  color: var(--color-ink);
+  font-weight: 900;
   margin: 0 0 0.2rem;
 }
 
 .productos-header p {
-  color: #64748b;
+  color: var(--color-muted);
   margin: 0;
 }
 
@@ -26,12 +33,12 @@
   grid-template-columns: minmax(180px, 1.2fr) minmax(120px, 0.7fr) minmax(100px, 0.55fr) minmax(160px, 0.9fr);
   gap: 0.75rem;
   align-items: end;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.07);
+  box-shadow: var(--shadow-sm);
 }
 
 .productos-url {
@@ -40,6 +47,10 @@
 
 .productos-submit {
   min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 }
 
 .productos-list {
@@ -55,7 +66,7 @@
   background: #ffffff;
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .producto-item {
@@ -64,6 +75,13 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.8rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.producto-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(14, 165, 168, 0.35);
+  box-shadow: var(--shadow-md);
 }
 
 .producto-info {
@@ -85,8 +103,12 @@
 
 .producto-img-empty {
   background:
-    linear-gradient(135deg, rgba(39, 230, 236, 0.18), rgba(26, 51, 74, 0.16)),
+    linear-gradient(135deg, rgba(14, 165, 168, 0.14), rgba(249, 115, 91, 0.14)),
     #dbe8ee;
+  display: grid;
+  place-items: center;
+  color: var(--color-brand);
+  font-size: 1.35rem;
 }
 
 .producto-copy {
@@ -97,7 +119,7 @@
 }
 
 .producto-copy strong {
-  color: #10253a;
+  color: var(--color-ink);
   font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,12 +127,12 @@
 }
 
 .producto-copy span {
-  color: #168f98;
+  color: var(--color-brand);
   font-weight: 800;
 }
 
 .producto-copy small {
-  color: #64748b;
+  color: var(--color-muted);
 }
 
 .producto-actions {
@@ -118,6 +140,12 @@
   align-items: center;
   gap: 0.5rem;
   flex: 0 0 auto;
+}
+
+.producto-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .productos-empty {

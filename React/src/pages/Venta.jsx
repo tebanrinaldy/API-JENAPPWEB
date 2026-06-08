@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FiPlus, FiX } from "react-icons/fi";
 import VentaModal from "../components/VentaModal";
 import VentaList from "../components/VentaList";
 import { getSales } from "../api/sales";
@@ -29,9 +30,7 @@ function Venta() {
 
   const ventasFiltradas = fechaFiltro
     ? ventas.filter((v) => {
-        const fechaVenta = new Date(v.date ?? v.Date)
-          .toISOString()
-          .slice(0, 10);
+        const fechaVenta = new Date(v.date ?? v.Date).toISOString().slice(0, 10);
         return fechaVenta === fechaFiltro;
       })
     : ventas;
@@ -48,58 +47,42 @@ function Venta() {
 
   return (
     <div className="venta-page">
-      <div className="container-fluid py-4">
-        <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-          <div>
-            <h2 className="fw-bold mb-1">Ventas realizadas</h2>
-            <p className="text-muted mb-0">
-              Consulta, filtra y administra tus ventas.
-            </p>
-          </div>
-
-          <button
-            className="btn btn-success btn-lg shadow-sm"
-            onClick={() => setMostrarModal(true)}
-          >
-            + Añadir venta
-          </button>
+      <div className="page-hero">
+        <div>
+          <h2>Ventas realizadas</h2>
+          <p>Consulta, filtra y administra las ventas de tu negocio.</p>
         </div>
 
-        <div className="card filtro-card shadow-sm mb-4">
-          <div className="card-body d-flex flex-wrap align-items-end gap-3">
-            <div>
-              <label className="form-label mb-1">Filtrar por fecha</label>
-              <input
-                type="date"
-                className="form-control"
-                value={fechaFiltro}
-                onChange={(e) => setFechaFiltro(e.target.value)}
-              />
-            </div>
-
-            {fechaFiltro && (
-              <button
-                className="btn btn-outline-secondary"
-                onClick={() => setFechaFiltro("")}
-              >
-                Limpiar filtro
-              </button>
-            )}
-          </div>
-        </div>
-
-        <VentaList
-          ventas={ventasFiltradas}
-          onVerTicket={manejarVerTicket}
-        />
-
-        {mostrarModal && (
-          <VentaModal
-            onClose={() => setMostrarModal(false)}
-            onConfirm={actualizarVentas}
-          />
-        )}
+        <button className="btn btn-success btn-lg" onClick={() => setMostrarModal(true)}>
+          <FiPlus /> Añadir venta
+        </button>
       </div>
+
+      <div className="filtro-card surface-panel">
+        <div className="filtro-content">
+          <div>
+            <label className="form-label mb-1">Filtrar por fecha</label>
+            <input
+              type="date"
+              className="form-control"
+              value={fechaFiltro}
+              onChange={(e) => setFechaFiltro(e.target.value)}
+            />
+          </div>
+
+          {fechaFiltro && (
+            <button className="btn btn-outline-secondary" onClick={() => setFechaFiltro("")}>
+              <FiX /> Limpiar filtro
+            </button>
+          )}
+        </div>
+      </div>
+
+      <VentaList ventas={ventasFiltradas} onVerTicket={manejarVerTicket} />
+
+      {mostrarModal && (
+        <VentaModal onClose={() => setMostrarModal(false)} onConfirm={actualizarVentas} />
+      )}
     </div>
   );
 }

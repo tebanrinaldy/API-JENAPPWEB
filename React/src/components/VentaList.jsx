@@ -1,9 +1,13 @@
-import React from "react";
-
 function VentaList({ ventas, onVerTicket }) {
   if (!ventas || ventas.length === 0) {
-    return <p className="text-muted">No hay ventas registradas.</p>;
+    return (
+      <div className="venta-empty">
+        <strong>No hay ventas registradas.</strong>
+        <span>Cuando registres ventas aparecerán en este historial.</span>
+      </div>
+    );
   }
+
   const ventasOrdenadas = [...ventas].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
@@ -11,55 +15,52 @@ function VentaList({ ventas, onVerTicket }) {
   return (
     <div className="venta-list">
       {ventasOrdenadas.map((venta) => {
-        const fechaFormateada = new Date(venta.date).toLocaleString("es-CO");
+        const fecha = new Date(venta.date);
+        const fechaFormateada = fecha.toLocaleString("es-CO");
+        const total = Number(venta.total || 0);
 
         return (
-          <div key={venta.id} className="card shadow-sm mb-3">
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-start mb-2">
-                <div>
-                  <p className="mb-1">
-                    <strong>Fecha:</strong> {fechaFormateada}
-                  </p>
+          <article key={venta.id} className="venta-card">
+            <header className="venta-card-header">
+              <div className="venta-card-heading">
+                <span className="venta-id">Venta #{venta.id}</span>
+                <h3>{venta.client || "Cliente sin nombre"}</h3>
+                <time>{fechaFormateada}</time>
+              </div>
 
-                  <p className="mb-1">
-                    <strong>Cliente:</strong> {venta.client}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Correo:</strong> {venta.email}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Teléfono:</strong> {venta.phone}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Dirección:</strong> {venta.address}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Método de pago:</strong> {venta.paymentMethod}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Total venta:</strong> $
-                    {venta.total.toLocaleString()}
-                  </p>
+              <div className="venta-total-box">
+                <span>Total</span>
+                <strong>${total.toLocaleString()}</strong>
+              </div>
+            </header>
+
+            <div className="venta-card-body">
+              <div className="venta-meta-grid">
+                <div className="venta-meta-item">
+                  <span>Correo</span>
+                  <strong>{venta.email || "Sin correo"}</strong>
                 </div>
-
-                {onVerTicket && (
-                  <button
-                    className="btn btn-sm btn-outline-primary"
-                    onClick={() => onVerTicket(venta)}
-                  >
-                    Ticket PDF
-                  </button>
-                )}
+                <div className="venta-meta-item">
+                  <span>Teléfono</span>
+                  <strong>{venta.phone || "Opcional"}</strong>
+                </div>
+                <div className="venta-meta-item">
+                  <span>Dirección</span>
+                  <strong>{venta.address || "Opcional"}</strong>
+                </div>
+                <div className="venta-meta-item">
+                  <span>Pago</span>
+                  <strong>{venta.paymentMethod || "Sin especificar"}</strong>
+                </div>
               </div>
 
               {venta.details && venta.details.length > 0 && (
-                <div className="table-responsive mt-2">
-                  <table className="table table-sm mb-0">
+                <div className="table-responsive venta-table-wrap">
+                  <table className="table table-sm venta-table mb-0">
                     <thead>
                       <tr>
                         <th>Producto</th>
-                        <th>Cantidad</th>
+                        <th>Cant.</th>
                         <th>Precio</th>
                         <th>Subtotal</th>
                       </tr>
@@ -77,8 +78,20 @@ function VentaList({ ventas, onVerTicket }) {
                   </table>
                 </div>
               )}
+
+              {onVerTicket && (
+                <div className="venta-card-actions">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary btn-sm venta-ticket-btn"
+                    onClick={() => onVerTicket(venta)}
+                  >
+                    Ticket PDF
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
+          </article>
         );
       })}
     </div>

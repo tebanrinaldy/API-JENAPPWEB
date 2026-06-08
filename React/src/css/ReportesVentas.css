@@ -1,0 +1,139 @@
+.reportes-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reporte-filtros {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.modo-switch {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 8px;
+  background: #eef5f6;
+  border: 1px solid #dce8ee;
+}
+
+.modo-switch button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 7px;
+  padding: 0.35rem 0.8rem;
+  color: var(--color-muted);
+  background: transparent;
+  font-weight: 850;
+}
+
+.modo-switch button.active {
+  color: #0f2837;
+  background: #ffffff;
+  box-shadow: 0 6px 14px rgba(23, 32, 51, 0.08);
+}
+
+.reporte-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reporte-actions .btn,
+.reporte-venta-head .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.reporte-resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reporte-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.reporte-summary article {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: var(--shadow-sm);
+}
+
+.reporte-summary span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.reporte-summary strong {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-ink);
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.reporte-ventas {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.reporte-venta-card {
+  padding: 1rem;
+}
+
+.reporte-venta-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.reporte-venta-head h4 {
+  margin: 0 0 0.2rem;
+  color: var(--color-ink);
+  font-weight: 900;
+}
+
+.reporte-venta-head p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.reporte-total {
+  margin-top: 0.85rem;
+  color: var(--color-muted);
+}
+
+.reporte-total strong {
+  color: var(--color-brand);
+}
+
+@media (max-width: 900px) {
+  .reporte-filtros,
+  .reporte-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .reporte-actions,
+  .reporte-venta-head {
+    flex-direction: column;
+  }
+
+  .reporte-actions .btn,
+  .reporte-venta-head .btn {
+    width: 100%;
+  }
+}

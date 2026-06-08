@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FiEdit2, FiFolder, FiPlus, FiTrash2, FiX } from "react-icons/fi";
 import {
-  getcategories,
   createcategories,
-  updatecategories,
   deletecategories,
+  getcategories,
+  updatecategories,
 } from "../api/categorias";
+import "../css/Categorias.css";
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
@@ -29,6 +31,7 @@ function Categorias() {
     setEditando(null);
     setNombre("");
   };
+
   const handlecreate = async (e) => {
     e.preventDefault();
 
@@ -42,11 +45,11 @@ function Categorias() {
 
     if (editando) {
       await updatecategories(editando.id, { name: nombre });
-      alert("Categoria actualizada con exito");
+      alert("Categoría actualizada con éxito");
       setEditando(null);
     } else {
       await createcategories({ name: nombre });
-      alert("Categoria creada con exito");
+      alert("Categoría creada con éxito");
     }
 
     setNombre("");
@@ -64,10 +67,15 @@ function Categorias() {
   };
 
   return (
-    <div className="categoria-page p-4">
-      <h2>Categorías de productos</h2>
+    <div className="categoria-page">
+      <header className="page-hero">
+        <div>
+          <h2>Categorías de productos</h2>
+          <p>Organiza tu catálogo para que vender y buscar sea más rápido.</p>
+        </div>
+      </header>
 
-      <form onSubmit={handlecreate} className="d-flex gap-2 mb-4">
+      <form onSubmit={handlecreate} className="categoria-form surface-panel">
         <input
           type="text"
           className="form-control"
@@ -80,47 +88,41 @@ function Categorias() {
         {editando ? (
           <>
             <button type="submit" className="btn btn-warning">
-              Guardar cambios
+              <FiEdit2 /> Guardar
             </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleCancelar}
-            >
-              Cancelar
+            <button type="button" className="btn btn-secondary" onClick={handleCancelar}>
+              <FiX /> Cancelar
             </button>
           </>
         ) : (
           <button type="submit" className="btn btn-success">
-            ➕ Crear
+            <FiPlus /> Crear
           </button>
         )}
       </form>
 
-      <ul className="list-group">
+      <div className="categoria-grid">
         {categorias.map((cat) => (
-          <li
-            key={cat.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-          >
+          <article key={cat.id} className="categoria-card">
+            <div className="categoria-icon">
+              <FiFolder />
+            </div>
             <span>{cat.name}</span>
-            <div className="d-flex gap-2">
-              <button
-                className="btn btn-sm btn-primary"
-                onClick={() => handleEditar(cat)}
-              >
-                Editar
+            <div className="categoria-actions">
+              <button className="btn btn-sm btn-primary" onClick={() => handleEditar(cat)}>
+                <FiEdit2 /> Editar
               </button>
-              <button
-                className="btn btn-sm btn-danger"
-                onClick={() => eliminarCategoria(cat.id)}
-              >
-                Eliminar
+              <button className="btn btn-sm btn-danger" onClick={() => eliminarCategoria(cat.id)}>
+                <FiTrash2 /> Eliminar
               </button>
             </div>
-          </li>
+          </article>
         ))}
-      </ul>
+
+        {categorias.length === 0 && (
+          <div className="surface-panel categoria-empty">No hay categorías registradas.</div>
+        )}
+      </div>
     </div>
   );
 }
