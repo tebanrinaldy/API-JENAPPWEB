@@ -1,100 +1,108 @@
-/* ======= RESET GLOBAL ======= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ======= BASE ======= */
 :root {
-  font-family: 'Segoe UI', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
-  background-color: #1A334A;
-  color: #ffffff;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  color: #10253a;
+  background: #edf5f7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ======= BODY ======= */
-html, body {
-  height: 100%;
-  background-color: #1A334A;
-  color: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-/* ======= LINKS ======= */
+html {
+  min-width: 320px;
+  background: #edf5f7;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: #edf5f7;
+  color: #10253a;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 a {
-  color: #27E6EC;
+  color: #168f98;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
+
 a:hover {
-  color: #1FB8C1;
+  color: #0e6f78;
 }
 
-/* ======= HEADINGS ======= */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-/* ======= BUTTONS ======= */
-button {
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 0.6em 1.2em;
-  border-radius: 0;
-  border: none;
-  background-color: #27E6EC;
-  color: #1A334A;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-button:hover {
-  background-color: #1FB8C1;
-}
-
-.sidebar .btn:hover {
-  background-color: #27E6EC;
-  color: #1A334A;
-}
-
-
-/* ======= IMAGES ======= */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* ======= SCROLLBAR ======= */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 650;
+}
+
+.btn-primary,
+.btn-success,
+.btn-info {
+  border-color: transparent;
+}
+
+.btn-primary {
+  background: #1a334a;
+}
+
+.btn-primary:hover {
+  background: #10253a;
+}
+
+.btn-success {
+  background: #16a34a;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border-color: #d5e0e7;
+  min-height: 42px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #27e6ec;
+  box-shadow: 0 0 0 0.2rem rgba(39, 230, 236, 0.18);
+}
+
+.card,
+.modal-content,
+.list-group-item {
+  color: #10253a;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
+  height: 9px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #1A334A;
+  background: rgba(16, 37, 58, 0.08);
 }
+
 ::-webkit-scrollbar-thumb {
-  background-color: #27E6EC;
-  border-radius: 4px;
-}
-
-/* ======= CONTAINERS ======= */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* ======= TRANSITIONS ======= */
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  background-color: rgba(22, 143, 152, 0.55);
+  border-radius: 999px;
 }

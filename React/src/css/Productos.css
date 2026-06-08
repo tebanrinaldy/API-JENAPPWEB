@@ -1,0 +1,155 @@
+.productos-page {
+  min-height: calc(100vh - 68px);
+}
+
+.productos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.productos-header h2 {
+  color: #10253a;
+  font-weight: 850;
+  margin: 0 0 0.2rem;
+}
+
+.productos-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.productos-form {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(120px, 0.7fr) minmax(100px, 0.55fr) minmax(160px, 0.9fr);
+  gap: 0.75rem;
+  align-items: end;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.07);
+}
+
+.productos-url {
+  grid-column: span 3;
+}
+
+.productos-submit {
+  min-height: 42px;
+}
+
+.productos-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.producto-item,
+.productos-empty {
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.06);
+}
+
+.producto-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem;
+}
+
+.producto-info {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.producto-img {
+  width: 68px;
+  height: 68px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #dbe8ee;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  flex: 0 0 auto;
+}
+
+.producto-img-empty {
+  background:
+    linear-gradient(135deg, rgba(39, 230, 236, 0.18), rgba(26, 51, 74, 0.16)),
+    #dbe8ee;
+}
+
+.producto-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.producto-copy strong {
+  color: #10253a;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.producto-copy span {
+  color: #168f98;
+  font-weight: 800;
+}
+
+.producto-copy small {
+  color: #64748b;
+}
+
+.producto-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.productos-empty {
+  padding: 1.2rem;
+  color: #64748b;
+}
+
+@media (max-width: 980px) {
+  .productos-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .productos-url {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .productos-form {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .producto-actions {
+    width: 100%;
+  }
+
+  .producto-actions .btn {
+    flex: 1;
+  }
+}

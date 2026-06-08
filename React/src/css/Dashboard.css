@@ -1,45 +1,59 @@
 .dashboard-container {
-  min-height: 100vh;
-  background: radial-gradient(circle at top left, #eef2ff, #f9fafb);
+  min-height: calc(100vh - 68px);
 }
 
 
 .soft-card {
-  border: none !important;
-  border-radius: 1rem;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  border-radius: 8px;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.07);
+  overflow: hidden;
 }
 
 
 .stat-card {
-  border-radius: 1rem;
+  min-height: 148px;
+  border-radius: 8px;
   padding: 1.25rem 1.5rem;
   color: #0f172a;
-  border: none;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
   background: white;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -20px -36px auto;
+  width: 104px;
+  height: 104px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .stat-card-primary {
-  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  background: linear-gradient(135deg, #1a334a, #168f98);
   color: white;
 }
 
 .stat-card-secondary {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: linear-gradient(135deg, #0f766e, #16a34a);
   color: white;
 }
 
 .stat-card-neutral {
-  background: linear-gradient(135deg, #64748b, #94a3b8);
+  background: linear-gradient(135deg, #334155, #64748b);
   color: white;
 }
 
 .stat-card-alert {
-  background: linear-gradient(135deg, #dc2626, #f97316);
+  background: linear-gradient(135deg, #b91c1c, #f59e0b);
   color: white;
 }
 
@@ -64,7 +78,7 @@
 
 /* Cards de stock */
 .stock-card {
-  border-radius: 1rem;
+  border-radius: 8px;
   padding: 1rem 1.1rem;
   background: white;
   border: 1px solid rgba(148, 163, 184, 0.2);
@@ -73,7 +87,7 @@
 }
 
 .stock-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
 }
 
@@ -88,4 +102,20 @@
 
 .text-danger-emphasis {
   color: #b91c1c !important;
+}
+
+@media (max-width: 640px) {
+  .dashboard-container .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .stat-card {
+    min-height: 126px;
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
 }

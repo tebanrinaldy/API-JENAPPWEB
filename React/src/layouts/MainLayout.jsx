@@ -7,7 +7,7 @@ import ChatJenApp from "../components/ChatJenApp";
 function MainLayout() {
   return (
     <div className="main-layout">
-      <div className="sidebar">
+      <div className="sidebar-shell">
         <Sidebar />
       </div>
       <div className="layout-right">

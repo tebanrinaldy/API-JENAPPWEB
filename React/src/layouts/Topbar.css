@@ -4,6 +4,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: flex-end;
+  width: 100%;
 }
 
 .topbar-user {
@@ -42,6 +43,28 @@
 .topbar-public-link:hover {
   color: #a5f3fc;
   text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .topbar-right {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar-right {
+    justify-content: center;
+    gap: 0.7rem;
+  }
+
+  .topbar-tenant {
+    width: 100%;
+    align-items: center;
+  }
+
+  .topbar-user {
+    font-size: 0.9rem;
+  }
 }
 
 
