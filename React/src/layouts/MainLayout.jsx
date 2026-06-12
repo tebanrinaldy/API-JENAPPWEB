@@ -1,8 +1,7 @@
-import Sidebar from './Sidebar';
-import Topbar from './Topbar';
-import { Outlet } from 'react-router-dom';
-import './MainLayout.css';
-import ChatJenApp from "../components/ChatJenApp";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import { Outlet } from "react-router-dom";
+import "./MainLayout.css";
 
 function MainLayout() {
   return (
@@ -15,7 +14,6 @@ function MainLayout() {
         <div className="main-content">
           <Outlet />
         </div>
-        <ChatJenApp />
       </div>
     </div>
   );

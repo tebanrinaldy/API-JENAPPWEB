@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { FiAlertTriangle, FiBox, FiDollarSign, FiShoppingBag } from "react-icons/fi";
+import {
+  FiAlertTriangle,
+  FiBox,
+  FiDollarSign,
+  FiShoppingBag,
+} from "react-icons/fi";
 import { getproductos } from "../api/productos";
 import { getSales } from "../api/sales";
 import SalesChart from "../components/SalesChart";
@@ -38,7 +43,7 @@ function Dashboard() {
   const ventasHoy = ventas.filter((v) => esHoy(v.date ?? v.Date));
   const totalVentasHoy = ventasHoy.reduce(
     (acum, v) => acum + (Number(v.total ?? v.Total ?? 0) || 0),
-    0
+    0,
   );
   const cantidadVentasHoy = ventasHoy.length;
   const stockMinimoPorDefecto = 5;
@@ -112,7 +117,9 @@ function Dashboard() {
         <div className="section-heading">
           <div>
             <h3>Ventas por día</h3>
-            <p>Historial reciente para detectar movimiento y temporadas fuertes.</p>
+            <p>
+              Historial reciente para detectar movimiento y temporadas fuertes.
+            </p>
           </div>
         </div>
         <SalesChart ventas={ventas} />
@@ -147,9 +154,7 @@ function Dashboard() {
                   <small>Mínimo recomendado: {stockMinimo}</small>
                 </div>
 
-                {estaBajo && (
-                  <span className="stock-alert">Stock bajo</span>
-                )}
+                {estaBajo && <span className="stock-alert">Stock bajo</span>}
               </article>
             );
           })}
