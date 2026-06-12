@@ -1,0 +1,173 @@
+Date : 2026-06-09 23:24:25
+Directory : c:\Proyectos\jenappweb\JENAPP_WEB
+Total : 115 files,  12935 codes, 102 comments, 1915 blanks, all 14952 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| C#             |         47 |      4,019 |         70 |      1,062 |      5,151 |
+| JSON           |          6 |      3,921 |          0 |          5 |      3,926 |
+| JavaScript JSX |         24 |      2,484 |          1 |        342 |      2,827 |
+| PostCSS        |         18 |      1,970 |         28 |        344 |      2,342 |
+| JavaScript     |         11 |        373 |          1 |         85 |        459 |
+| Markdown       |          2 |         65 |          0 |         35 |        100 |
+| MS SQL         |          1 |         49 |          0 |         32 |         81 |
+| XML            |          3 |         30 |          0 |          4 |         34 |
+| HTML           |          1 |         13 |          0 |          1 |         14 |
+| Docker         |          1 |         10 |          2 |          4 |         16 |
+| Dotenv         |          1 |          1 |          0 |          1 |          2 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                             | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                |        115 |     12,935 |        102 |      1,915 |     14,952 |
+| . (Files)                                                                                        |          1 |         56 |          0 |         27 |         83 |
+| .config                                                                                          |          1 |         13 |          0 |          0 |         13 |
+| React                                                                                            |         60 |      8,690 |         30 |        783 |      9,503 |
+| React (Files)                                                                                    |          7 |      3,894 |          1 |         16 |      3,911 |
+| React\public                                                                                     |          1 |          1 |          0 |          0 |          1 |
+| React\src                                                                                        |         52 |      4,795 |         29 |        767 |      5,591 |
+| React\src (Files)                                                                                |          4 |        261 |          0 |         48 |        309 |
+| React\src\api                                                                                    |          9 |        340 |          0 |         81 |        421 |
+| React\src\assets                                                                                 |          1 |          1 |          0 |          0 |          1 |
+| React\src\components                                                                             |          9 |        787 |          0 |        107 |        894 |
+| React\src\css                                                                                    |         13 |      1,486 |         28 |        264 |      1,778 |
+| React\src\layouts                                                                                |          6 |        405 |          0 |         63 |        468 |
+| React\src\pages                                                                                  |         10 |      1,515 |          1 |        204 |      1,720 |
+| Webapi                                                                                           |         53 |      4,176 |         72 |      1,105 |      5,353 |
+| Webapi (Files)                                                                                   |          7 |        206 |          6 |         47 |        259 |
+| Webapi\Controllers                                                                               |         10 |        843 |         45 |        169 |      1,057 |
+| Webapi\Data                                                                                      |          1 |        116 |          0 |         27 |        143 |
+| Webapi\Hubs                                                                                      |          1 |         15 |          0 |          4 |         19 |
+| Webapi\Middleware                                                                                |          1 |         57 |          0 |         11 |         68 |
+| Webapi\Migrations                                                                                |         10 |      2,110 |         21 |        686 |      2,817 |
+| Webapi\Models                                                                                    |         11 |        169 |          0 |         20 |        189 |
+| Webapi\Properties                                                                                |          1 |         41 |          0 |          1 |         42 |
+| Webapi\Repositories                                                                              |          3 |         61 |          0 |         10 |         71 |
+| Webapi\Services                                                                                  |          8 |        558 |          0 |        130 |        688 |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                         | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Proyectos\jenappweb\JENAPP_WEB\.config\dotnet-tools.json                                      | JSON           |         13 |          0 |          0 |         13 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\PORTABILIDAD.md                                                | Markdown       |         56 |          0 |         27 |         83 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\.env                                                     | Dotenv         |          1 |          0 |          1 |          2 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\README.md                                                | Markdown       |          9 |          0 |          8 |         17 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\eslint.config.js                                         | JavaScript     |         28 |          0 |          2 |         30 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\index.html                                               | HTML           |         13 |          0 |          1 |         14 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\package-lock.json                                        | JSON           |      3,799 |          0 |          1 |      3,800 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\package.json                                             | JSON           |         39 |          0 |          1 |         40 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\public\vite.svg                                          | XML            |          1 |          0 |          0 |          1 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\App.css                                              | PostCSS        |          3 |          0 |          1 |          4 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\App.jsx                                              | JavaScript JSX |         45 |          0 |          7 |         52 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\api.js                                           | JavaScript     |         27 |          0 |         13 |         40 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\baseurl.js                                       | JavaScript     |         14 |          0 |          4 |         18 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\categorias.js                                    | JavaScript     |         42 |          0 |          5 |         47 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\inventario.js                                    | JavaScript     |         25 |          0 |          6 |         31 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\pendingSales.js                                  | JavaScript     |         27 |          0 |          4 |         31 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\productos.js                                     | JavaScript     |         64 |          0 |         15 |         79 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\reports.js                                       | JavaScript     |         43 |          0 |         13 |         56 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\sales.js                                         | JavaScript     |         43 |          0 |         10 |         53 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\api\users.js                                         | JavaScript     |         55 |          0 |         11 |         66 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\assets\react.svg                                     | XML            |          1 |          0 |          0 |          1 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\CategoriaSelector.jsx                     | JavaScript JSX |        122 |          0 |         15 |        137 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\ChatJenApp.jsx                            | JavaScript JSX |        119 |          0 |         16 |        135 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\Notification.jsx                          | JavaScript JSX |         12 |          0 |          4 |         16 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\PrivateRoute.jsx                          | JavaScript JSX |         12 |          0 |          1 |         13 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\SalesChart.jsx                            | JavaScript JSX |         82 |          0 |         16 |         98 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\VentaForm.jsx                             | JavaScript JSX |         80 |          0 |         11 |         91 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\VentaList.jsx                             | JavaScript JSX |         93 |          0 |          9 |        102 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\VentaModal.jsx                            | JavaScript JSX |         90 |          0 |         12 |        102 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\components\VentasPendientes.jsx                      | JavaScript JSX |        177 |          0 |         23 |        200 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\CategoriaSelector.css                            | PostCSS        |         44 |          0 |          9 |         53 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Categorias.css                                   | PostCSS        |         83 |          0 |         13 |         96 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\ChatJenApp.css                                   | PostCSS        |        174 |          4 |         24 |        202 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Dashboard.css                                    | PostCSS        |        199 |          0 |         34 |        233 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Inventario.css                                   | PostCSS        |        122 |          0 |         21 |        143 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Login.css                                        | PostCSS        |        100 |          0 |         14 |        114 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Notification.css                                 | PostCSS        |         23 |          0 |          2 |         25 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\PedidoPublico.css                                | PostCSS        |        206 |          4 |         46 |        256 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Productos.css                                    | PostCSS        |        157 |          0 |         27 |        184 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Register.css                                     | PostCSS        |         10 |          0 |          2 |         12 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\ReportesVentas.css                               | PostCSS        |        118 |          0 |         22 |        140 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\SalesChart.css                                   | PostCSS        |         18 |          6 |          7 |         31 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\css\Venta.css                                        | PostCSS        |        232 |         14 |         43 |        289 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\index.css                                            | PostCSS        |        197 |          0 |         36 |        233 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\MainLayout.css                               | PostCSS        |         68 |          0 |         10 |         78 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\MainLayout.jsx                               | JavaScript JSX |         22 |          0 |          3 |         25 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\Sidebar.css                                  | PostCSS        |        140 |          0 |         19 |        159 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\Sidebar.jsx                                  | JavaScript JSX |         51 |          0 |          9 |         60 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\Topbar.css                                   | PostCSS        |         76 |          0 |         14 |         90 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\layouts\Topbar.jsx                                   | JavaScript JSX |         48 |          0 |          8 |         56 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\main.jsx                                             | JavaScript JSX |         16 |          0 |          4 |         20 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Categorias.jsx                                 | JavaScript JSX |        114 |          0 |         17 |        131 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Dashboard.jsx                                  | JavaScript JSX |        151 |          0 |         18 |        169 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Inventario.jsx                                 | JavaScript JSX |        168 |          0 |         23 |        191 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Login.jsx                                      | JavaScript JSX |         57 |          0 |         11 |         68 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\PedidoPublico.jsx                              | JavaScript JSX |        356 |          1 |         48 |        405 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Productos.jsx                                  | JavaScript JSX |        207 |          0 |         24 |        231 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Register.jsx                                   | JavaScript JSX |         83 |          0 |         12 |         95 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\ReportesVentas.jsx                             | JavaScript JSX |        167 |          0 |         19 |        186 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\SeguimientoPedidoPublico.jsx                   | JavaScript JSX |        134 |          0 |         19 |        153 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\src\pages\Venta.jsx                                      | JavaScript JSX |         78 |          0 |         13 |         91 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\React\vite.config.js                                           | JavaScript     |          5 |          1 |          2 |          8 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\CategoriesController.cs                     | C#             |         84 |          7 |         21 |        112 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\ChatController.cs                           | C#             |         26 |          0 |          7 |         33 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\InventoryMovementsController.cs             | C#             |         43 |          3 |          5 |         51 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\PendingSalesController.cs                   | C#             |        213 |          8 |         48 |        269 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\ProductsController.cs                       | C#             |        124 |          7 |         24 |        155 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\ReportsController.cs                        | C#             |         36 |          0 |          5 |         41 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\SaleDetailsController.cs                    | C#             |        102 |          7 |         21 |        130 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\SalesController.cs                          | C#             |         71 |          5 |         12 |         88 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\UsersController.cs                          | C#             |        115 |          8 |         21 |        144 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Controllers\WeatherForecastController.cs                | C#             |         29 |          0 |          5 |         34 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Data\Connectioncontextdb.cs                             | C#             |        116 |          0 |         27 |        143 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Dockerfile                                              | Docker         |         10 |          2 |          4 |         16 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Hubs\NotificationsHub.cs                                | C#             |         15 |          0 |          4 |         19 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\JwtTokensGenerator.cs                                   | C#             |         40 |          1 |          8 |         49 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Middleware\TenantMiddleware.cs                          | C#             |         57 |          0 |         11 |         68 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211221144_Intitialmigration.Designer.cs | C#             |        243 |          2 |         91 |        336 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211221144_Intitialmigration.cs          | C#             |        214 |          3 |         24 |        241 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211224050_sales.Designer.cs             | C#             |        255 |          2 |         95 |        352 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211224050_sales.cs                      | C#             |         50 |          3 |         10 |         63 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211230012_MigracionInicial.Designer.cs  | C#             |        258 |          2 |         96 |        356 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20251211230012_MigracionInicial.cs           | C#             |         23 |          3 |          4 |         30 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20260602042316_AddMultitenancy.Designer.cs   | C#             |        374 |          2 |        138 |        514 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\20260602042316_AddMultitenancy.cs            | C#             |        272 |          3 |         58 |        333 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\AddMultitenancy.sql                          | MS SQL         |         49 |          0 |         32 |         81 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Migrations\ConnectioncontextdbModelSnapshot.cs          | C#             |        372 |          1 |        138 |        511 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\Category.cs                                      | C#             |         10 |          0 |          1 |         11 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\ITenantScoped.cs                                 | C#             |          7 |          0 |          1 |          8 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\InventoryMovement.cs                             | C#             |         15 |          0 |          1 |         16 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\PendingSale.cs                                   | C#             |         20 |          0 |          1 |         21 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\PendingSaleDetail.cs                             | C#             |         18 |          0 |          4 |         22 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\Product.cs                                       | C#             |         15 |          0 |          1 |         16 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\Reports.cs                                       | C#             |         27 |          0 |          4 |         31 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\Sale.cs                                          | C#             |         17 |          0 |          1 |         18 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\SaleDetail.cs                                    | C#             |         18 |          0 |          4 |         22 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\Tenant.cs                                        | C#             |         11 |          0 |          1 |         12 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Models\User.cs                                          | C#             |         11 |          0 |          1 |         12 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Program.cs                                              | C#             |         89 |          3 |         25 |        117 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Properties\launchSettings.json                          | JSON           |         41 |          0 |          1 |         42 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Repositories\IRepository.cs                             | C#             |         11 |          0 |          1 |         12 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Repositories\IUserRepository.cs                         | C#             |          8 |          0 |          2 |         10 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Repositories\Repository.cs                              | C#             |         42 |          0 |          7 |         49 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\ChatbotService.cs                              | C#             |        144 |          0 |         46 |        190 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\ITenantProvider.cs                             | C#             |          9 |          0 |          1 |         10 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\Inventoryservice.cs                            | C#             |         45 |          0 |          8 |         53 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\Productservice.cs                              | C#             |         23 |          0 |          3 |         26 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\Reportsservice.cs                              | C#             |        157 |          0 |         32 |        189 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\Saleservice.cs                                 | C#             |         65 |          0 |         13 |         78 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\TenantProvider.cs                              | C#             |         13 |          0 |          2 |         15 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Services\Userservice.cs                                 | C#             |        102 |          0 |         25 |        127 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\WeatherForecast.cs                                      | C#             |         10 |          0 |          4 |         14 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\Webapi.csproj                                           | XML            |         28 |          0 |          4 |         32 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\appsettings.Development.json                            | JSON           |          8 |          0 |          1 |          9 |
+| c:\Proyectos\jenappweb\JENAPP_WEB\Webapi\appsettings.json                                        | JSON           |         21 |          0 |          1 |         22 |
+| Total                                                                                            |                |     12,935 |        102 |      1,915 |     14,952 |
++--------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
