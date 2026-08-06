@@ -134,7 +134,9 @@ namespace Webapi.Data
 
             foreach (var entry in ChangeTracker.Entries<ITenantScoped>())
             {
-                if (entry.State == EntityState.Added && entry.Entity.TenantId == 0)
+                // El tenant siempre se determina en el servidor. Nunca se confía en
+                // un TenantId enviado por el cliente al crear información nueva.
+                if (entry.State == EntityState.Added)
                     entry.Entity.TenantId = tenantId;
             }
         }

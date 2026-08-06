@@ -67,17 +67,23 @@ function CategoriaSelector({ carrito, setCarrito, tenantSlug }) {
   };
 
   return (
-    <div>
-      <h5>Categorías:</h5>
+    <div className="catalog-selector">
+      <div className="catalog-selector-heading">
+        <div>
+          <span className="catalog-eyebrow">Explora el catálogo</span>
+          <h5>Categorías</h5>
+        </div>
+        <span className="catalog-count">{productosFiltrados.length} productos</span>
+      </div>
 
-      <div className="d-flex gap-2 mb-3 flex-wrap">
+      <div className="catalog-chips">
         {categorias.map((cat) => (
           <button
             key={cat.id}
-            className={`btn ${
+            className={`catalog-chip ${
               categoriaSeleccionada?.id === cat.id
-                ? "btn-info"
-                : "btn-outline-info"
+                ? "is-active"
+                : ""
             }`}
             onClick={() => setCategoriaSeleccionada(cat)}
           >
@@ -85,7 +91,7 @@ function CategoriaSelector({ carrito, setCarrito, tenantSlug }) {
           </button>
         ))}
         <button
-          className="btn btn-outline-info"
+          className={`catalog-chip ${!categoriaSeleccionada ? "is-active" : ""}`}
           onClick={() => setCategoriaSeleccionada(null)}
         >
           Todas
@@ -101,7 +107,7 @@ function CategoriaSelector({ carrito, setCarrito, tenantSlug }) {
 
             return (
               <Col key={producto.id} md={6} lg={4} className="mb-3">
-                <Card className="bg-dark text-white product-card h-100">
+                <Card className="product-card h-100">
                   {imagenUrl && (
                     <Card.Img
                       variant="top"
@@ -113,8 +119,8 @@ function CategoriaSelector({ carrito, setCarrito, tenantSlug }) {
 
                   <Card.Body>
                     <Card.Title>{producto.name}</Card.Title>
-                    <Card.Text>${producto.price.toLocaleString()}</Card.Text>
-                    <Card.Text>Stock disponible: {producto.stock}</Card.Text>
+                    <Card.Text className="product-price">${producto.price.toLocaleString()}</Card.Text>
+                    <Card.Text className="product-stock">{producto.stock > 0 ? `${producto.stock} disponibles` : "Agotado"}</Card.Text>
                     <Button
                       variant="info"
                       onClick={() => agregarAlCarrito(producto)}

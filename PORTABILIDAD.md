@@ -34,6 +34,12 @@ Configurar Ollama si no usa el valor local por defecto:
 $env:Ollama__BaseUrl="http://localhost:11434"
 ```
 
+Para publicar el frontend en otro dominio, declare los orígenes permitidos para CORS:
+
+```powershell
+$env:Cors__AllowedOrigins__0="https://tu-dominio.com"
+```
+
 Restaurar herramientas EF y aplicar migraciones en una base nueva:
 
 ```powershell

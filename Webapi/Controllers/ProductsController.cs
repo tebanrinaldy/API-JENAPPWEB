@@ -39,7 +39,8 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            _logger.LogInformation($"GET /api/products - TenantId: {_tenantProvider.TenantId}, TenantSlug: {_tenantProvider.TenantSlug}");
+            if (_tenantProvider.TenantId is null)
+                return BadRequest(new { message = "Debe indicar un negocio válido." });
             
             var products = await _context.Products.ToListAsync();
             

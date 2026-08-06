@@ -26,7 +26,7 @@ namespace Webapi.Middleware
             if (int.TryParse(tenantIdClaim, out var tenantId))
             {
                 _logger.LogInformation($"Tenant from JWT claim: {tenantId}");
-                tenantProvider.SetTenant(tenantId);
+                tenantProvider.SetTenant(tenantId, httpContext.User.FindFirstValue("tenant_slug"));
                 await _next(httpContext);
                 return;
             }

@@ -73,7 +73,7 @@ namespace Webapi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(RegisterUserDto request)
+        public async Task<ActionResult> PostUser(RegisterUserDto request)
         {
             var user = new User
             {
@@ -86,7 +86,14 @@ namespace Webapi.Controllers
             if (result == "El usuario ya existe")
                 return Conflict(new { message = result });
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, new
+            {
+                user.Id,
+                user.Username,
+                user.TenantId,
+                tenantSlug = user.Tenant?.Slug,
+                tenantName = user.Tenant?.Name
+            });
         }
 
         // DELETE: api/Users/5

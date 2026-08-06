@@ -100,6 +100,9 @@ namespace Webapi.Controllers
             [FromQuery] string? code,
             [FromQuery] string? phone)
         {
+            if (_tenantProvider.TenantId is null)
+                return BadRequest("Debe enviar un tenant válido para consultar el pedido.");
+
             if (string.IsNullOrWhiteSpace(code) && string.IsNullOrWhiteSpace(phone))
                 return BadRequest("Debe enviar un código o teléfono.");
 
@@ -170,6 +173,9 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> TrackByCode(string code)
         {
+            if (_tenantProvider.TenantId is null)
+                return BadRequest("Debe enviar un tenant válido para consultar el pedido.");
+
             var sale = await _context.PendingSales
                 .AsNoTracking()
                 .Where(p => p.TrackingCode == code)
