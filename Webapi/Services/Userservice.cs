@@ -42,14 +42,24 @@ namespace Webapi.Services
 
             if (user.TenantId == 0)
             {
-                var tenant = new Tenant
-                {
-                    Name = string.IsNullOrWhiteSpace(tenantName) ? user.Username : tenantName.Trim(),
-                    Slug = await BuildAvailableSlugAsync(tenantSlug ?? tenantName ?? user.Username)
-                };
+                var existingTenant = await FindTenantAsync(tenantSlug, tenantName);
 
-                _context.Tenants.Add(tenant);
-                user.Tenant = tenant;
+                if (existingTenant != null)
+                {
+                    user.TenantId = existingTenant.Id;
+                    user.Tenant = existingTenant;
+                }
+                else
+                {
+                    var tenant = new Tenant
+                    {
+                        Name = string.IsNullOrWhiteSpace(tenantName) ? user.Username : tenantName.Trim(),
+                        Slug = await BuildAvailableSlugAsync(tenantSlug ?? tenantName ?? user.Username)
+                    };
+
+                    _context.Tenants.Add(tenant);
+                    user.Tenant = tenant;
+                }
             }
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -94,6 +104,31 @@ namespace Webapi.Services
 
             var valid = BCrypt.Net.BCrypt.Verify(password, user.Password);
             return valid ? user : null;
+        }
+
+        private async Task<Tenant?> FindTenantAsync(string? tenantSlug, string? tenantName)
+        {
+            if (!string.IsNullOrWhiteSpace(tenantSlug))
+            {
+                var normalizedSlug = tenantSlug.Trim().ToLowerInvariant();
+                var tenantBySlug = await _context.Tenants
+                    .FirstOrDefaultAsync(t => t.Slug.ToLower() == normalizedSlug);
+
+                if (tenantBySlug != null)
+                    return tenantBySlug;
+            }
+
+            if (!string.IsNullOrWhiteSpace(tenantName))
+            {
+                var normalizedName = tenantName.Trim().ToLowerInvariant();
+                var tenantByName = await _context.Tenants
+                    .FirstOrDefaultAsync(t => t.Name.ToLower() == normalizedName);
+
+                if (tenantByName != null)
+                    return tenantByName;
+            }
+
+            return null;
         }
 
         private async Task<string> BuildAvailableSlugAsync(string value)

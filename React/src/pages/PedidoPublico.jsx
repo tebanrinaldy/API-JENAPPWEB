@@ -29,7 +29,9 @@ function PedidoPublico() {
   const incrementar = useCallback((id) => {
     setCarrito((prev) =>
       prev.map((it) =>
-        it.id === id ? { ...it, cantidad: it.cantidad + 1 } : it
+        it.id === id && it.cantidad < it.stock
+          ? { ...it, cantidad: it.cantidad + 1 }
+          : it
       )
     );
   }, []);
@@ -309,6 +311,7 @@ Teléfono: ${clienteData.phone || ""}
                             className="btn btn-qty"
                             aria-label={`Aumentar ${item.nombre}`}
                             onClick={() => incrementar(item.id)}
+                            disabled={item.cantidad >= item.stock}
                             title="Aumentar"
                           >
                             +

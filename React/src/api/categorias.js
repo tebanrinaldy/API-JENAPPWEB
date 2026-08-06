@@ -11,6 +11,9 @@ export const getcategories = async (tenantSlug) => {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
+  if (!res.ok) {
+    throw new Error((await res.text()) || "Error al obtener categorías");
+  }
   return res.json();
 };
 export const createcategories = async (category) => {

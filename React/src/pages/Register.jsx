@@ -9,12 +9,19 @@ function Register() {
   const [password, setPassword] = useState("");
   const [tenantName, setTenantName] = useState("");
   const [tenantSlug, setTenantSlug] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleregister = async (e) => {
     e.preventDefault();
 
+    if (!tenantName.trim() && !tenantSlug.trim()) {
+      alert("Ingresa el nombre del negocio o su identificador para crear uno nuevo o unirte a uno existente.");
+      return;
+    }
+
     try {
+      setIsSubmitting(true);
       const result = await createuser({
         Username: username,
         Password: password,
@@ -31,6 +38,8 @@ function Register() {
     } catch (error) {
       console.error("Error en el registro:", error);
       alert("Ocurrió un error al registrar el usuario");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -39,7 +48,7 @@ function Register() {
       <div className="register-card">
         <span className="auth-kicker">JenApp</span>
         <h2>Registrar negocio</h2>
-        <p className="auth-subtitle">Crea tu espacio y empieza a vender mejor.</p>
+        <p className="auth-subtitle">Crea tu usuario y únete a un negocio existente o crea uno nuevo.</p>
 
         <form onSubmit={handleregister}>
           <label>Usuario administrador</label>
@@ -54,19 +63,21 @@ function Register() {
           <label>Nombre del negocio</label>
           <input
             type="text"
-            placeholder="Ej: Mi tienda"
+            placeholder="Ej: Mi tienda (opcional si ya existe)"
             value={tenantName}
             onChange={(e) => setTenantName(e.target.value)}
-            required
           />
 
-          <label>Identificador público</label>
+          <label>Slug del negocio</label>
           <input
             type="text"
-            placeholder="Ej: mi-tienda"
+            placeholder="Ej: mi-tienda (si ya existe, se añadirá ahí)"
             value={tenantSlug}
             onChange={(e) => setTenantSlug(e.target.value)}
           />
+          <p className="auth-helper">
+            Si el negocio ya existe, escribe su slug. Si no existe, se creará con el nombre proporcionado.
+          </p>
 
           <label>Contraseña</label>
           <input
@@ -77,11 +88,14 @@ function Register() {
             required
           />
 
-          <button type="submit">Registrar</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Registrando..." : "Registrar"}
+          </button>
           <button
             type="button"
             onClick={() => navigate("/login")}
             className="back-button"
+            disabled={isSubmitting}
           >
             Volver al inicio de sesión
           </button>

@@ -36,7 +36,8 @@ namespace Webapi.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            _logger.LogInformation($"GET /api/categories - TenantId: {_tenantProvider.TenantId}, TenantSlug: {_tenantProvider.TenantSlug}");
+            if (_tenantProvider.TenantId is null)
+                return BadRequest(new { message = "Debe indicar un negocio válido." });
             
             var categories = await _context.Categories.ToListAsync();
             

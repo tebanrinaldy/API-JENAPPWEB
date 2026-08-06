@@ -1,6 +1,6 @@
 const configuredApiUrl = import.meta.env.VITE_API_URL;
 
-export const BASE_API_URL = (configuredApiUrl || "https://api-jenappweb.onrender.com").replace(/\/$/, "");
+export const BASE_API_URL = (configuredApiUrl || "http://127.0.0.1:5132").replace(/\/$/, "");
 
 export function getStoredTenantSlug() {
   try {

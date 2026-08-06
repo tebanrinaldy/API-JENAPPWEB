@@ -13,7 +13,7 @@
   gap: 0.4rem;
   min-height: 38px;
   padding: 0.42rem 0.72rem;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 700;
   color: #edf7fb;
   background: rgba(255, 255, 255, 0.08);
@@ -61,6 +61,7 @@
   align-items: center;
   gap: 0.45rem;
   min-height: 38px;
+  border-radius: 999px;
 }
 
 @media (max-width: 900px) {

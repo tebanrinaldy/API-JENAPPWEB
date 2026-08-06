@@ -12,6 +12,7 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import ReporteVenta from "./pages/ReportesVentas.jsx";
 import SeguimientoPedido from "./pages/SeguimientoPedidoPublico.jsx";
 import { getStoredTenantSlug } from "./api/baseurl.js";
+import "./App.css";
 
 function StartRoute() {
   const isLogged = Boolean(sessionStorage.getItem("user"));

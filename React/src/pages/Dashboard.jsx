@@ -101,7 +101,10 @@ function Dashboard() {
       </div>
 
       <div className="stats-grid">
-        {stats.map(({ label, value, caption, icon: Icon, tone }) => (
+        {stats.map(
+          // JSX component references are not detected by the base ESLint rule.
+          // eslint-disable-next-line no-unused-vars
+          ({ label, value, caption, icon: Icon, tone }) => (
           <article key={label} className={`stat-card stat-card-${tone}`}>
             <div className="stat-icon">
               <Icon />
@@ -110,7 +113,8 @@ function Dashboard() {
             <h3 className="stat-value">{value}</h3>
             <span className="stat-caption">{caption}</span>
           </article>
-        ))}
+          ),
+        )}
       </div>
 
       <section className="soft-card chart-card">

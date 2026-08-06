@@ -1,5 +1,5 @@
 
-import { BASE_API_URL } from "./baseurl";
+import { BASE_API_URL, tenantHeaders } from "./baseurl";
 
 
 export async function apiFetch(endpoint, options = {}) {
@@ -7,6 +7,7 @@ export async function apiFetch(endpoint, options = {}) {
 
   const headers = {
     "Content-Type": "application/json",
+    ...tenantHeaders(),
     ...(options.headers || {})
   };
 
@@ -26,6 +27,7 @@ export async function apiFetch(endpoint, options = {}) {
 export async function apiFetchNoAuth(endpoint, options = {}) {
   const headers = {
     "Content-Type": "application/json",
+    ...tenantHeaders(),
     ...(options.headers || {})
   };
 

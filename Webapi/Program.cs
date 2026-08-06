@@ -20,16 +20,21 @@ var cadenaconexion = builder.Configuration.GetConnectionString("CadenaConexionDB
 builder.Services.AddDbContext<Connectioncontextdb>(options =>
     options.UseSqlServer(cadenaconexion));
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? new[]
+    {
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174"
+    };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTodo", policy =>
     {
         policy
-            .WithOrigins(
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-                "http://localhost:5174",
-                "http://127.0.0.1:5174")
+            .WithOrigins(allowedOrigins)
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();

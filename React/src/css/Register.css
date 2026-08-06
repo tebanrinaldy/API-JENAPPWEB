@@ -9,3 +9,15 @@
   background: rgba(201, 251, 255, 0.1) !important;
   color: #ffffff !important;
 }
+
+.auth-helper {
+  margin: -0.15rem 0 0.2rem;
+  color: #a5c3cf;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.register-card button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
